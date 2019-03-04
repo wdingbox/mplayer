@@ -6,3 +6,23 @@ fatal: unable to access 'https://github.com/wdingbox/mplayer.git/': The requeste
 
 #solutions:
 git remote -v
+
+
+
+url = https://wdingbox:3edcfdsa@github.com/wdingbox/ham12.git
+
+104-188-182-128:.git weiding$ more .git/config 
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+        ignorecase = true
+        precomposeunicode = true
+[remote "origin"]
+        url = https://wdingbox:3edcfdsa@github.com/wdingbox/ham12.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+config (END)
