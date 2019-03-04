@@ -51,31 +51,43 @@ function show_current_time() {
 
 	$("#start_float").val(curTime);
 	$("#start_hhmmss").val(hhmmss);
-
 }
 
 
-
+function HeadersWidthAdjustment() {//** Width adjustment.
+	$("table tbody tr:eq(0)").find("td").each(function (i) {
+		var w = $(this).width();
+		$(`thead th:eq(${i})`).css("width", w);
+		w = $(`thead th:eq(${i})`).width();
+		$(this).css("width", w);
+		console.log(w);
+	});
+}
 function gen_audio_sel(mPlayerResrs, vobj) {
 	var pathfileArr = [];
 
-	var optns = "<option></option>";
-	for (var path in mPlayerResrs) {
-		console.log("path:" + path);
-		optns += "<optgroup  label='" + path + "'>";
-		for (var filename in mPlayerResrs[path]) {
-			var key = path + filename;
-			optns += "<option value='" + key + "' path='" + path + "' filename='" + filename + "'>" + filename + "</option>";
-			console.log(key);
-			pathfileArr.push(key);
-		}
-		optns += "</optgroup>";
+	var path = mPlayerResrs.path;
+	var trs = "";
+	var idx=0;
+	for (var filename in mPlayerResrs.files) {
+		var key = path + filename;
+		trs+=`<tr><td>${++idx}</td>`;
+		trs += `<td class="src" onclick="start_play('${key}');" value='${key}' path='${path}'>${filename}</td>`;
+		trs+=`<td>${mPlayerResrs.files[filename]['00:00:00.0']}</td>`;
+		console.log(key);
+		
+		trs += "</tr>";
+		pathfileArr.push(key);
 	};
 
 	vobj.m_srcArr = pathfileArr;
 	vobj.m_srcIdx = 0;
 
-	$("#myAudioFileNameSelect").html(optns);
+	$("#myAudioFileNameSelect tbody").html(trs).find(".src").bind("click",function(){
+		$(".hili").removeClass("hili");
+		$(this).toggleClass("hili");
+	});
+	HeadersWidthAdjustment();
 };
 
 
@@ -101,7 +113,7 @@ function hhmmss2input(_THIS) {
 	$("#start_hhmmss").val(hhmmss);
 }
 
-function speedup(fval){
+function speedup(fval) {
 	gvObj.playbackRate += fval;
 	$("#speed").text(gvObj.playbackRate);
 }
@@ -154,52 +166,6 @@ $(function () {
 		gvObj.currentTime = parseFloat($("#start_float").val());
 		gvObj.play();
 	});
-	$("#stop").click(function () {
-		gvObj.pause();
-		show_current_time();
-
-		$("#start_float").val(gvObj.currentTime);
-	});
-
-
-
-
-
-
-
-
-
-
-
-
-	$("#hhmmssToDecimal").click(function () {
-		var hhmmss = $("#start_hhmmss").val();
-		console.log(hhmmss);
-		var v = Util.convert_hhmmss_to_seconds(hhmmss);
-		console.log(v);
-		$("#start_float").val(v);
-
-	});
-
-
-	$("#playback1s").click(function () {
-		gvObj.pause();
-		gvObj.currentTime -= 5.0;
-		if (gvObj.currentTime < 0) gvObj.currentTime = 0;
-		gvObj.play();
-
-		show_current_time();
-	});
-
-
-	$("#playforward1s").click(function () {
-		gvObj.pause();
-		gvObj.currentTime += 1.0;
-		if (gvObj.currentTime < 0) gvObj.currentTime = 0;
-		gvObj.play();
-
-		show_current_time();
-	});
 
 
 	$("#videoSize").click(function () {
@@ -213,4 +179,15 @@ $(function () {
 });////////////////////////////////
 
 
+function play_forward(fdlt) {
+	gvObj.pause();
+	gvObj.currentTime += fdlt;
+	if (gvObj.currentTime < 0) gvObj.currentTime = 0;
+	if (0 != fdlt) gvObj.play();
 
+	show_current_time();
+}
+function start_play(filename){
+	gvObj.src = filename;
+	gvObj.play();
+}
