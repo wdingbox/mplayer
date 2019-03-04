@@ -22,9 +22,7 @@ function momnent_millisecond_to_hhmmss(vtime){
                     return paddingInt(hh)+":"+paddingInt(mm)+":"+paddingInt(ss)+"."+ms;                    
 }; 
  
-function GetAudioSrc(pAudio)  {
 
-}
 function show_current_time()  {
 			    var curTime = gvObj.currentTime;
                 console.log(curTime);
@@ -115,15 +113,7 @@ $(function () {
 
 	gen_audio_sel(mPlayerResources, gvObj);
      
-    $("#Back0").click(function(){
-        gvObj.pause();
-		gvObj.src=$("").val();
-        gvObj.currentTime -= 5.0;
-        $("#currTime").text(gvObj.currentTime);
-        if(gvObj.currentTime<0) gvObj.currentTime=0;
-        gvObj.play();
-     });
-	 
+
 	 
 	 
 	 
