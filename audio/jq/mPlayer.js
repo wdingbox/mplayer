@@ -35,6 +35,15 @@ var Util = {
 			arr[i] = parseInt(arr[i]);
 		}
 		return arr[0] * 3600 + arr[1] * 60 + arr[2];
+	},
+	HeadersWidthAdjustment: function () {//** Width adjustment.
+		$("table tbody tr:eq(0)").find("td").each(function (i) {
+			var w = $(this).width();
+			$(`thead th:eq(${i})`).css("width", w);
+			w = $(`thead th:eq(${i})`).width();
+			$(this).css("width", w);
+			console.log(w);
+		});
 	}
 }
 
@@ -54,28 +63,20 @@ function show_current_time() {
 }
 
 
-function HeadersWidthAdjustment() {//** Width adjustment.
-	$("table tbody tr:eq(0)").find("td").each(function (i) {
-		var w = $(this).width();
-		$(`thead th:eq(${i})`).css("width", w);
-		w = $(`thead th:eq(${i})`).width();
-		$(this).css("width", w);
-		console.log(w);
-	});
-}
+
 function gen_audio_sel(mPlayerResrs, vobj) {
 	var pathfileArr = [];
 
 	var path = mPlayerResrs.path;
 	var trs = "";
-	var idx=0;
+	var idx = 0;
 	for (var filename in mPlayerResrs.files) {
 		var key = path + filename;
-		trs+=`<tr><td>${++idx}</td>`;
+		trs += `<tr><td>${++idx}</td>`;
 		trs += `<td class="src" onclick="start_play('${key}');" value='${key}' path='${path}'>${filename}</td>`;
-		trs+=`<td>${mPlayerResrs.files[filename]['00:00:00.0']}</td>`;
+		trs += `<td>${mPlayerResrs.files[filename]['00:00:00.0']}</td>`;
 		console.log(key);
-		
+
 		trs += "</tr>";
 		pathfileArr.push(key);
 	};
@@ -83,22 +84,22 @@ function gen_audio_sel(mPlayerResrs, vobj) {
 	vobj.m_srcArr = pathfileArr;
 	vobj.m_srcIdx = 0;
 
-	$("#myAudioFileNameSelect tbody").html(trs).find(".src").bind("click",function(){
+	$("#myAudioFileNameSelect tbody").html(trs).find(".src").bind("click", function () {
 		$(".hili").removeClass("hili");
 		$(this).toggleClass("hili");
 	});
-	HeadersWidthAdjustment();
+	Util.HeadersWidthAdjustment();
 };
 
 
 function gen_file_info_table(pathfilename, mPlayerResrs) {
-	var ilast = 1 + pathfilename.lastIndexOf("/");
-	var path = pathfilename.substr(0, ilast);
-	var file = pathfilename.substr(ilast);
+	var arr = pathfilename.split("/");
+	var path = arr[0];
+	var file = arr[arr.length - 1];
 	var caption = "<caption>" + file + "<caption>";
 	console.log(file);
 	var trs = "<tr><td>start</td><td>desc</td></tr>";
-	var obj = mPlayerResrs[path][file];
+	var obj = mPlayerResrs.files[file];
 	console.log(obj);
 	for (var key in obj) {
 		trs += "<tr><td onclick='hhmmss2input(this)'>" + key + "</td><td>" + obj[key] + "</td></tr>";
@@ -107,6 +108,20 @@ function gen_file_info_table(pathfilename, mPlayerResrs) {
 	$("#tabinfor").html(caption + trs);
 }
 
+function play_forward(fdlt) {
+	gvObj.pause();
+	gvObj.currentTime += fdlt;
+	if (gvObj.currentTime < 0) gvObj.currentTime = 0;
+	if (0 != fdlt) gvObj.play();
+
+	show_current_time();
+}
+function start_play(filename) {
+	gvObj.src = filename;
+	gvObj.play();
+	$("#myAudioFileNameSelect caption").text(filename);
+	gen_file_info_table(filename, mPlayerResources);
+}
 
 function hhmmss2input(_THIS) {
 	var hhmmss = $(_THIS).text();
@@ -138,31 +153,18 @@ $(function () {
 			var ilast = 1 + pathfile.lastIndexOf("/");
 			var path = pathfile.substr(0, ilast);
 			var file = pathfile.substr(ilast);
-			$("#myAudioFileNameSelect").val(file);
+			$("#myAudioFileNameSelect caption").text(file);
 
 			console.log(pathfile);
 			gen_file_info_table(pathfile, mPlayerResources);
 		}//fi
-
 	});
 
 
 	gen_audio_sel(mPlayerResources, gvObj);
 
 
-
-
-
-	$("#myAudioFileNameSelect").change(function () {
-		var filename = $(this).val();
-		gvObj.src = filename;
-		gvObj.play();
-		$("#speed").text(gvObj.playbackRate);
-		gen_file_info_table(filename, mPlayerResources);
-	});
-
 	$("#play").click(function () {
-
 		gvObj.currentTime = parseFloat($("#start_float").val());
 		gvObj.play();
 	});
@@ -177,17 +179,3 @@ $(function () {
 	});
 
 });////////////////////////////////
-
-
-function play_forward(fdlt) {
-	gvObj.pause();
-	gvObj.currentTime += fdlt;
-	if (gvObj.currentTime < 0) gvObj.currentTime = 0;
-	if (0 != fdlt) gvObj.play();
-
-	show_current_time();
-}
-function start_play(filename){
-	gvObj.src = filename;
-	gvObj.play();
-}
