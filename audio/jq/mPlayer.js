@@ -15,7 +15,7 @@ Date.prototype.addMilliseconds = function (mils) {
 	return date;
 }
 var Util = {
-	convert_second_to_hhmmss: function (snd) {
+	convert_seconds_to_hhmmss: function (snd) {
 		var mlis = parseFloat(snd) * 1000.0;
 		var dt0 = new Date(0, 0, 0, 0, 0, 0, 0);
 		var dt = dt0.addMilliseconds(mlis);
@@ -38,15 +38,19 @@ var Util = {
 	}
 }
 
-Util.convert_second_to_hhmmss(59.123);//second
-Util.convert_second_to_hhmmss(159.123);//second
+Util.convert_seconds_to_hhmmss(59.123);//second
+Util.convert_seconds_to_hhmmss(159.123);//second
+
+
+
 function show_current_time() {
 	var curTime = gvObj.currentTime;
 	console.log(curTime);
 
-	var hhmmss = Util.convert_second_to_hhmmss(curTime);
+	var hhmmss = Util.convert_seconds_to_hhmmss(curTime);
 
-	$("#currTime").text(curTime + "=" + hhmmss);
+	$("#start_float").val(curTime);
+	$("#start_hhmmss").val(hhmmss);
 
 }
 
@@ -153,12 +157,7 @@ $(function () {
 
 		$("#start_float").val(gvObj.currentTime);
 	});
-	$("#currTime").click(function () {
-		var ct = $(this).text();
-		var arr = ct.split("=");
-		$("#start_float").val(arr[0]);
-		$("#start_hhmmss").val(arr[1]);
-	});
+
 
 
 
