@@ -29,12 +29,19 @@ function convert_second_to_hhmmss(snd) {
 	console.log(`${yy}-${mn}-${dd} ${hh}:${mm}:${ss}.${uu}`);
 	return `${hh}:${mm}:${ss}.${uu}`;
 }
+function convert_hhmmss_to_seconds(hhmmss){
+	var arr=hhmmss.split(":");
+	for(var i=0;i<arr.length;i++){
+		arr[i]=parseInt(arr[i]);
+	}
+	return arr[0]*3600+arr[1]*60+arr[2];
+}
 convert_second_to_hhmmss(59.123);//second
 convert_second_to_hhmmss(159.123);//second
 function show_current_time() {
 	var curTime = gvObj.currentTime;
 	console.log(curTime);
-	//var hhmmss2 = moment.duration(curTime, 0);
+
 	var hhmmss = convert_second_to_hhmmss(curTime);
 
 	$("#currTime").text(curTime + "=" + hhmmss);
@@ -174,7 +181,7 @@ $(function () {
 	$("#hhmmssToDecimal").click(function () {
 		var hhmmss = $("#start_hhmmss").val();
 		console.log(hhmmss);
-		var v = moment.duration(hhmmss).asSeconds();
+		var v = convert_hhmmss_to_seconds(hhmmss);
 		console.log(v);
 		$("#start_float").val(v);
 
