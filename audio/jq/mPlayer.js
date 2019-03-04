@@ -189,13 +189,6 @@ $(function () {
 	});
 
 
-	$("#minus_seconds").click(function () {
-		var time = $("#start_float").val();
-		var itime = parseFloat(time) - 1.0;
-		$("#start_float").val(itime);
-	});
-
-
 	$("#playback1s").click(function () {
 		gvObj.pause();
 		gvObj.currentTime -= 5.0;

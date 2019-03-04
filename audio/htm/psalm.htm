@@ -16,6 +16,13 @@
 
 
   </script>
+  <style>
+    body{
+    }
+  input{
+    width:80px;
+  }
+  </style>
 
 <body>
 
@@ -40,13 +47,10 @@
   </button>
   <button id="stop">pause</button>
   <br>
-  <a id="currTime">0</a>
-  <br>
 
 
-
-
-  <input id="start_float" onclick="$('#start_hhmmss').val(Util.convert_seconds_to_hhmmss($(this).val()));" value="0.0" title="in seconds"></input><button id='minus_seconds'>-</button><br>
+  <input id="start_float" onclick="$('#start_hhmmss').val(Util.convert_seconds_to_hhmmss($(this).val()));" value="0.0"
+    title="in seconds"></input>=
 
   <input id="start_hhmmss" onclick="$('#start_float').val(Util.convert_hhmmss_to_seconds($(this).val()));"
     value="00:00:00.00" title="hh:mm:ss."></input>
