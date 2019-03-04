@@ -2,3 +2,7 @@
 git push
 remote: Permission to wdingbox/mplayer.git denied to wdingsoft.
 fatal: unable to access 'https://github.com/wdingbox/mplayer.git/': The requested URL returned error: 403
+
+
+#solutions:
+git remote -v
