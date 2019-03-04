@@ -101,7 +101,10 @@ function hhmmss2input(_THIS) {
 	$("#start_hhmmss").val(hhmmss);
 }
 
-
+function speedup(fval){
+	gvObj.playbackRate += fval;
+	$("#speed").text(gvObj.playbackRate);
+}
 
 $(function () {
 	gvObj = document.getElementById('myAudio');
@@ -165,16 +168,6 @@ $(function () {
 
 
 
-	$("#speedup").click(function () {
-		gvObj.playbackRate += 0.25;
-		$("#speedrate").text(gvObj.playbackRate);
-		$("#speed").text(gvObj.playbackRate);
-	});
-	$("#speeddn").click(function () {
-		gvObj.playbackRate -= 0.25;
-		$("#speedrate").text(gvObj.playbackRate);
-		$("#speed").text(gvObj.playbackRate);
-	});
 
 
 
