@@ -96,7 +96,7 @@ function gen_file_info_table(pathfilename, mPlayerResrs) {
 	var arr = pathfilename.split("/");
 	var path = arr[0];
 	var file = arr[arr.length - 1];
-	var caption = "<caption>" + file + "<caption>";
+	var caption = "<caption>" + pathfilename + "<caption>";
 	console.log(file);
 	var trs = "<tr><td>start</td><td>desc</td></tr>";
 	var obj = mPlayerResrs.files[file];
@@ -119,7 +119,7 @@ function play_forward(fdlt) {
 function start_play(filename) {
 	gvObj.src = filename;
 	gvObj.play();
-	$("#myAudioFileNameSelect caption").text(filename);
+	$("#tabinfor caption").text(filename);
 	gen_file_info_table(filename, mPlayerResources);
 }
 
