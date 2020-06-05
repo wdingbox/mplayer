@@ -183,8 +183,8 @@ $(function () {
 		var str = $("#txta").val();
 		var pos = 1 + str.lastIndexOf("=");
 		str = str.substr(pos);
-		var jsnon = JSON.parse(str);
-		gen_audio_sel(jsnon, gvObj);
+		mPlayerResources = JSON.parse(str);
+		gen_audio_sel(mPlayerResources, gvObj);
 	})
 
 });////////////////////////////////
