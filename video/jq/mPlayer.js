@@ -150,10 +150,6 @@ $(function () {
 
 
 			var pathfile = gvObj.m_srcArr[gvObj.m_srcIdx];
-			var ilast = 1 + pathfile.lastIndexOf("/");
-			var path = pathfile.substr(0, ilast);
-			var file = pathfile.substr(ilast);
-			$("#myAudioFileNameSelect caption").text(file);
 
 			console.log(pathfile);
 			gen_file_info_table(pathfile, mPlayerResources);
