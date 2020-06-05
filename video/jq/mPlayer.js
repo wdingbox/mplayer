@@ -178,4 +178,13 @@ $(function () {
 		$("#myAudio").attr("width", width);
 	});
 
+
+	$("#jsondata").click(function () {
+		var str = $("#txta").val();
+		var pos = 1 + str.lastIndexOf("=");
+		str = str.substr(pos);
+		var jsnon = JSON.parse(str);
+		gen_audio_sel(jsnon, gvObj);
+	})
+
 });////////////////////////////////
