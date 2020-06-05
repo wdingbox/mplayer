@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>tmp</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+  </META>
+  <script src="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
+
+  <script src="../jq/mPlayer.js"></script>
+
+  <script src="tmp.json.js"></script>
+
+  <script language="javascript">
+
+
+  </script>
+  <style>
+    body {}
+
+    thead {
+      display: block;
+    }
+
+    tbody {
+      height: 100px;
+      overflow-y: scroll;
+      display: block;
+    }
+
+    .hili {
+      background-color: grey;
+    }
+
+    input {
+      width: 80px;
+    }
+  </style>
+
+<body>
+
+
+
+  <video id="myAudio" controls width="400">
+    <source src="" type="audio/ogg">
+    <source src="" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </video>
+  <hr />
+
+
+
+
+
+
+  <button id="speedup" onclick="speedup(0.25);">+</button>
+  <button id="speeddn" onclick="speedup(-0.25);">-</button>
+  <a id="speed">1.0</a>
+  <button id="play">play</button>
+  <button id="playback1s" onclick="play_forward(-1);"> &lt; </button>
+  <button id="stop" onclick="play_forward(0);"> || </button>
+  <button id="playforward1s" onclick="play_forward(1);"> &gt; </button>
+
+  <br>
+
+
+  <input id="start_float" onclick="$('#start_hhmmss').val(Util.convert_seconds_to_hhmmss($(this).val()));" value="0.0"
+    title="in seconds"></input>=
+
+  <input id="start_hhmmss" onclick="$('#start_float').val(Util.convert_hhmmss_to_seconds($(this).val()));"
+    value="00:00:00.00" title="hh:mm:ss."></input>
+
+
+
+  <hr />
+
+
+  <table id="myAudioFileNameSelect" border='1'>
+    <option></option>
+    <thead>
+      <th>#</th>
+      <th>name</th>
+      <th>desc</th>
+    </thead>
+    <tbody></tbody>
+  </table><br>
+  <table id='tabinfor' border='1'>
+    <caption></caption>
+      <tbody></tbody>
+  </table>
+
+</body>
+
+</html>
