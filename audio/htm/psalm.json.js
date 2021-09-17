@@ -5,7 +5,7 @@
 var mPlayerResources={
 
     path_local_old:"../src/psalm27/",
-    path:"https://github.com/wdingbox/mplayer/tree/master/audio/src/psalm27/",
+    path:"https://wdingbox.github.io/mplayer/audio/src/psalm27/",
     files:{
     "01-Psa-100.mp3":{"00:00:00.0":"普天下当向耶和华欢呼、","01:53:20.0":"observation1"},
     "02-Psa-008.mp3":{"00:00:00.0":"耶和华我们的主阿你的名","01:53:20.0":"observation1"},
