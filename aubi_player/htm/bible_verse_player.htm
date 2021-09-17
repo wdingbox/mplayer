@@ -8,12 +8,10 @@
   </META>
   <script src="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
 
-<script src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleVerseAudioRelativePos/NIV.json.js"></script>
-<script src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleVerseAudioRelativePos/Audio_Bible_Struct.js"></script>
+  <script src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleVerseAudioRelativePos/NIV.json.js"></script>
+  <script src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleVerseAudioRelativePos/Audio_Bible_Struct.js"></script>
 
- 
-  <script xxsrc="../jsBibleVerseAudioRelativePos/NIV.json.js"></script>
-  <script xxxsrc="../jsBibleVerseAudioRelativePos/Audio_Bible_Struct.js"></script>
+
   <script src="../jq/mPlayer.js"></script>
   <script src="bible_verse_player.js"></script>
 
@@ -28,12 +26,14 @@
       display: block;
     }
 
-    table, tr{
-        width: 100%;
+    table,
+    tr {
+      width: 100%;
     }
+
     tbody {
       height: 500px;
-      
+
       overflow-y: scroll;
       display: block;
     }
@@ -79,8 +79,8 @@
 
   <input id="start_hhmmss" onclick="$('#start_float').val(Util.convert_hhmmss_to_seconds($(this).val()));"
     value="00:00:00.00" title="hh:mm:ss."></input>
-<br>
-<a id="playname">...</a>
+  <br>
+  <a id="playname">...</a>
 
 
 
@@ -92,11 +92,11 @@
     <thead>
       <th id="Bk_Chp_gen">Bk_Chp</th>
       <th>Verses</th>
-     
+
     </thead>
     <tbody></tbody>
   </table><br>
-  
+
 
 </body>
 
