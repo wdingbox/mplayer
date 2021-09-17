@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Psalm</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+  </META>
+  <script src="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
+
+  <script src="../jq/mPlayer.js"></script>
+
+  <script src="tester_src.json.js"></script>
+
+  <script language="javascript">
+
+
+  </script>
+  <style>
+    body {}
+
+    thead {
+      display: block;
+    }
+
+    tbody {
+      height: 100px;
+      overflow-y: scroll;
+      display: block;
+    }
+
+    .hili {
+      background-color: grey;
+    }
+
+    input {
+      width: 80px;
+    }
+  </style>
+
+<body>
+
+
+
+  <audio id="myAudio" controls width="400" height="100">
+    <source src="" type="audio/ogg">
+    <source src="" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <hr />
+
+
+
+
+
+
+  <button id="speedup" onclick="speedup(0.25);">+</button>
+  <button id="speeddn" onclick="speedup(-0.25);">-</button>
+  <a id="speed">1.0</a>
+  <button id="play">play</button>
+  <button id="playback1s" onclick="play_forward(-1);"> &lt; </button>
+  <button id="stop" onclick="play_forward(0);"> || </button>
+  <button id="playforward1s" onclick="play_forward(1);"> &gt; </button>
+
+  <br>
+
+
+  <input id="start_float" onclick="$('#start_hhmmss').val(Util.convert_seconds_to_hhmmss($(this).val()));" value="0.0"
+    title="in seconds"></input>=
+
+  <input id="start_hhmmss" onclick="$('#start_float').val(Util.convert_hhmmss_to_seconds($(this).val()));"
+    value="00:00:00.00" title="hh:mm:ss."></input>
+
+
+
+  <hr />
+
+
+  <table id="myAudioFileNameSelect" border='1'>
+    <option></option>
+    <thead>
+      <th>#</th>
+      <th>name</th>
+      <th>desc</th>
+    </thead>
+    <tbody></tbody>
+  </table><br>
+  <table id='tabinfor' border='1'>
+    <caption></caption>
+      <tbody></tbody>
+  </table>
+
+</body>
+
+</html>
+
+
+<script>
+
+
+function gen_audio_sel(mPlayerResrs, vobj) {
+	var pathfileArr = [];
+
+	var path = mPlayerResrs.path;
+	var trs = "";
+	var idx = 0;
+	for (var filename in mPlayerResrs.files) {
+		var key = path + filename;
+		trs += `<tr><td>${++idx}</td>`;
+		trs += `<td class="src" onclick="start_play('${key}');" value='${key}' path='${path}'>${filename}</td>`;
+		trs += `<td>${mPlayerResrs.files[filename]['00:00:00.0']}</td>`;
+		console.log(key);
+
+		trs += "</tr>";
+		pathfileArr.push(key);
+	};
+
+	vobj.m_srcArr = pathfileArr;
+	vobj.m_srcIdx = 0;
+
+	$("#myAudioFileNameSelect tbody").html(trs).find(".src").bind("click", function () {
+		$(".hili").removeClass("hili");
+		$(this).toggleClass("hili");
+	});
+	Util.HeadersWidthAdjustment();
+};
+
+
+function gen_file_info_table(pathfilename, mPlayerResrs) {
+	var arr = pathfilename.split("/");
+	var path = arr[0];
+	var file = arr[arr.length - 1];
+	var caption = "<caption>" + file + "<caption>";
+	console.log(file);
+	var trs = "<tr><td>start</td><td>desc</td></tr>";
+	var obj = mPlayerResrs.files[file];
+	console.log(obj);
+	for (var key in obj) {
+		trs += "<tr><td onclick='hhmmss2input(this)'>" + key + "</td><td>" + obj[key] + "</td></tr>";
+		console.log(key);
+	};
+	$("#tabinfor").html(caption + trs);
+}
+
+
+$(function () {
+	gvObj = document.getElementById('myAudio');
+	gvObj.addEventListener('ended', function () {
+		if (!!gvObj.m_srcArr) {
+
+			if (gvObj.m_srcArr.length > gvObj.m_srcIdx) {
+				gvObj.m_srcIdx++;
+			}
+			else {
+				gvObj.m_srcIdx = 0;
+			}
+			gvObj.src = gvObj.m_srcArr[gvObj.m_srcIdx];
+			gvObj.playbackRate = parseFloat($("#speed").text());
+			gvObj.play();
+
+
+			var pathfile = gvObj.m_srcArr[gvObj.m_srcIdx];
+			var ilast = 1 + pathfile.lastIndexOf("/");
+			var path = pathfile.substr(0, ilast);
+			var file = pathfile.substr(ilast);
+			$("#myAudioFileNameSelect caption").text(file);
+
+			console.log(pathfile);
+			gen_file_info_table(pathfile, mPlayerResources);
+		}//fi
+	});
+
+
+	gen_audio_sel(mPlayerResources, gvObj);
+
+
+	$("#play").click(function () {
+		gvObj.currentTime = parseFloat($("#start_float").val());
+		gvObj.play();
+	});
+
+
+	$("#videoSize").click(function () {
+		var width = 100 + parseInt($("#myAudio").attr("width"));
+		if (width > 888) {
+			width = 100;
+		}
+		$("#myAudio").attr("width", width);
+	});
+
+});////////////////////////////////
+
+</script>
