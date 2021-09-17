@@ -8,8 +8,9 @@ $(function () {
 
     const urlParams = new URLSearchParams(window.location.search);
     var bcv = urlParams.get('bcv');
+    var txt = urlParams.get('txt')
     if (bcv) {
-        play_param_bcv(bcv)
+        play_param_bcv(bcv, txt)
     }
     else {
         gen_bible_table()
@@ -22,7 +23,7 @@ $(function () {
 
 });////////////////////////////////
 
-function play_param_bcv(bcv) {
+function play_param_bcv(bcv,txt) {
     console.log("bcv=", bcv)
     bcv = bcv.replace(/\s/g, "")
     var mat = bcv.match("([0-9a-zA-Z]{3})([0-9]+)[\:]([0-9]+)")
@@ -38,8 +39,8 @@ function play_param_bcv(bcv) {
     var BibleObj = NIV
     var relativePosi = BibleObj[Bk][Chp][Vrs]
 
-    var dis = `${bcv}  ${audsrc}`
-    $("#playname").text(dis)
+    var dis = `${bcv}  ${audsrc} <br>${txt}`
+    $("#playname").html(dis)
 
     setTimeout(function () {
 
