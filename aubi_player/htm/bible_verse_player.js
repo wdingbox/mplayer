@@ -6,55 +6,58 @@ $(function () {
         gen_bible_table()
     })
 
+    const urlParams = new URLSearchParams(window.location.search);
+    var bcv = urlParams.get('bcv');
+    if (bcv) {
+        play_param_bcv(bcv)
+    }
+    else {
+        gen_bible_table()
+    }
+
     gvObj = document.getElementById('myAudio');
     //setTimeout(function () {
-        play_param_bcv()
     //}, 1000)
 
 
 });////////////////////////////////
 
-function play_param_bcv() {
+function play_param_bcv(bcv) {
+    console.log("bcv=", bcv)
+    bcv = bcv.replace(/\s/g, "")
+    var mat = bcv.match("([0-9a-zA-Z]{3})([0-9]+)[\:]([0-9]+)")
+    if(!mat){
+        return alert("bcv value invalid.")
+    }
+    console.log(mat)
+    var Bk = mat[1]
+    var Chp = mat[2]
+    var Vrs = mat[3]
+    var audsrc = Audio_Bible_Struct.findAudioUrlFolderPath(Bk, Chp)
 
-    const urlParams = new URLSearchParams(window.location.search);
-    var bcv = urlParams.get('bcv');
-    if (bcv) {
-        console.log("bcv=", bcv)
-        bcv = bcv.replace(" ", "")
-        var mat = bcv.match("([0-9a-zA-Z]{3})([0-9]+)[\:]([0-9]+)")
-        console.log(mat)
-        var Bk = mat[1]
-        var Chp = mat[2]
-        var Vrs = mat[3]
-        var audsrc = Audio_Bible_Struct.findAudioUrlFolderPath(Bk, Chp)
+    var BibleObj = NIV
+    var relativePosi = BibleObj[Bk][Chp][Vrs]
 
-        var BibleObj = NIV
-        var relativePosi = BibleObj[Bk][Chp][Vrs]
+    var dis = `${bcv}  ${audsrc}`
+    $("#playname").text(dis)
 
-        var dis = `${bcv}  ${audsrc}`
-        $("#playname").text(dis)
+    setTimeout(function () {
 
-
+        gvObj.src = audsrc
+        gvObj.muted = false;
 
         setTimeout(function () {
-
-            gvObj.src = audsrc
-            gvObj.muted = false;
-
-            setTimeout(function () {
-                var maxlen = gvObj.duration;//(audio len in seconds)
-                if (!maxlen) {
-                    alert("try again")
-                    return;
-                }
-                console.log("maxlen", maxlen)
-                gvObj.currentTime = maxlen * parseFloat(relativePosi)
-                //gvObj.play()
-                console.log(audsrc)
-            }, 500)
-        }, 0)
-
-    }
+            var maxlen = gvObj.duration;//(audio len in seconds)
+            if (!maxlen) {
+                alert("try again")
+                return;
+            }
+            console.log("maxlen", maxlen)
+            gvObj.currentTime = maxlen * parseFloat(relativePosi)
+            //gvObj.play()
+            console.log(audsrc)
+        }, 500)
+    }, 0)
 }
 
 function gen_bible_table() {
