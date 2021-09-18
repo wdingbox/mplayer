@@ -56,6 +56,10 @@ function play_url_param_bcv(bcv) {
 
     $("#filename").val(audinfo.audsrc)
 
+    init_ui_audio(audinfo)
+    
+}
+function init_ui_audio(audinfo){
     setTimeout(function () {
 
         gvObj.src = audinfo.audsrc
@@ -79,7 +83,6 @@ function play_url_param_bcv(bcv) {
         }, 500)
     }, 0)
 }
-
 function gen_bible_table() {
 
     var BibleObj = VrsAudioRelativePosLen_NIV
@@ -110,38 +113,7 @@ function gen_bible_table() {
 
         $("#filename").val(audinfo.audsrc)
 
-        //gvObj = null
-        //gvObj = document.getElementById('myAudio');
-
-        setTimeout(function () {
-            gvObj.src = audinfo.audsrc
-            //gvObj.play()
-            //gvObj.pause()
-            setTimeout(function () {
-                var maxlen = parseFloat(gvObj.duration);//(audio len in seconds)
-                if (!maxlen) {
-                    alert("try again")
-                    return;
-                }
-                console.log("maxlen", maxlen)
-                var startime = maxlen * audinfo.relativePos
-                var duratime = maxlen * audinfo.relativeLen
-
-                //gvObj.currentTime = starttime
-                //gvObj.play()
-                //console.log(audsrc)
-
-                $("#start_float").val(startime.toFixed(4))
-                $("#duration_float").val(duratime.toFixed(4))
-
-                $("#start_loop").trigger("click")
-            }, 500)
-        }, 0)
-
-
-
-        //
-
+        init_ui_audio(audinfo)
 
     });
 }
