@@ -31,13 +31,13 @@ function append_playedItm(bcv, txt) {
     }
 }
 function get_audio_info(bcv) {
-    console.log("bcv=", bcv)
+    //console.log("bcv=", bcv)
     bcv = bcv.replace(/\s/g, "")
     var mat = bcv.match("([0-9a-zA-Z]{3})([0-9]+)[\:]([0-9]+)")
     if (!mat) {
-        return alert("?bcv= value invalid.")
+        return alert(bcv + ": invalid.")
     }
-    console.log(mat)
+    //console.log(mat)
     var Bk = mat[1]
     var Chp = mat[2]
     var Vrs = mat[3]
@@ -55,56 +55,12 @@ function play_url_param_bcv(bcv) {
     append_playedItm(bcv, audinfo.txt)
     //init_ui_audio(audinfo)
 }
-function init_ui_audio(audinfo) {
-    function init_ui(audinfo){
-        var maxlen = gvObj.duration;//(audio len in seconds)
-        if (!maxlen) {
-            alert("duration failed:" + audinfo.audsrc)
-            return;
-        }
-        console.log("maxlen", maxlen)
-        var startime = parseFloat(maxlen) * parseFloat(audinfo.relativePos)
-        var duratime = parseFloat(maxlen) * parseFloat(audinfo.relativeLen)
-        //gvObj.currentTime = starttime
-        //gvObj.play()
-        $("#start_float").val(startime.toFixed(4))
-        $("#durat_float").val(duratime.toFixed(4))
-        console.log(audinfo.audsrc)
-
-        setTimeout(function(){
-            $("#start_loop").focus()
-            $("#start_loop").trigger("click")
-        },100)
-    }
-
-    if (!gvObj) {
-        gvObj = document.getElementById('myAudio');
-    }
-    $("#filename").val(audinfo.audsrc)
-    setTimeout(function () {
-
-        gvObj.src = audinfo.audsrc
-        gvObj.pause()
-        //gvObj.muted = false;
-        
-
-        if(gvObj.onplay){
-            gvObj.onplay(function () {
-            
-            })
-        }
-        
-        setTimeout(function () {
-            init_ui(audinfo);
-        }, 1500)
-    }, 0)
-}
 function gen_bible_table() {
 
     var BibleObj = VrsAudioRelativePosLen_NIV
     var trs = ""
     for (let Bk in BibleObj) {
-        console.log(Bk)
+        //console.log(Bk)
         for (let Chp in BibleObj[Bk]) {
             //console.log(Bk)
             trs += `<tr><td>${Bk}${Chp}</td><td>`
@@ -146,26 +102,72 @@ function playedItm_scroll2view() {
     init_ui_audio(audinfo)
 }
 
-function loop_start(){
+function init_ui_audio(audinfo) {
+    function init_ui(audinfo) {
+
+        //console.log(audinfo.audsrc)
+    }
+
+
+    if (!gvObj) {
+        gvObj = document.getElementById('myAudio');
+    }
+    $("#filename").val(audinfo.audsrc)
+
+    gvObj.src = audinfo.audsrc
+    gvObj.muted = true;
+    var stop_time = -1
+    gvObj.onplay = function () {
+        var maxlen = gvObj.duration;//(audio len in seconds)
+        if (!maxlen) {
+            alert(maxlen + "duration failed:" + audinfo.audsrc)
+            return;
+        }
+        //console.log("maxlen", maxlen)
+        var startime = parseFloat(maxlen) * parseFloat(audinfo.relativePos)
+        var duratime = parseFloat(maxlen) * parseFloat(audinfo.relativeLen)
+        stop_time = startime + duratime
+        gvObj.currentTime = startime
+        gvObj.muted = false;
+        //gvObj.play()
+        $("#start_float").val(startime.toFixed(4))
+        $("#durat_float").val(duratime.toFixed(4))
+
+    }
+    gvObj.ontimeupdate = function () {
+        if (-1 === stop_time) return
+        if (gvObj.currentTime >= stop_time) {
+            gvObj.pause()
+
+            ////// loop after 3s. 
+            setTimeout(function () {
+                gvObj.currentTime = start_time
+                gvObj.play()
+            }, 3000)
+        }
+    }
+}
+function loop_start() {
     var dur_time = parseFloat($("#durat_float").val())
     var offset_time = parseFloat($("#offset_float").val())
     var start_time = offset_time + parseFloat($("#start_float").val())
     var stop_time = start_time + dur_time
-    $("#dbg").append(`gvObj.currentTime= ${gvObj.currentTime}=${start_time}+ ${offset_time}<br>`)
+    var str = `gvObj.currentTime= ${gvObj.currentTime}=${start_time}+ ${offset_time}<br>`
+    $("#dbg").append(str)
 
     gvObj.src = $("#filename").val()
-    gvObj.pause()
-    gvObj.currentTime = start_time 
+    gvObj.muted = false;
+    gvObj.currentTime = start_time
     gvObj.play()
     gvObj.ontimeupdate = function () {
-      if (gvObj.currentTime >= stop_time) {
-        gvObj.pause()
+        if (gvObj.currentTime >= stop_time) {
+            gvObj.pause()
 
-        ////// loop after 3s. 
-        setTimeout(function () {
-          gvObj.currentTime = start_time
-          gvObj.play()
-        }, 3000)
-      }
+            ////// loop after 3s. 
+            setTimeout(function () {
+                gvObj.currentTime = start_time
+                gvObj.play()
+            }, 3000)
+        }
     }
 }
