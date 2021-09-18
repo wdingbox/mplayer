@@ -21,7 +21,6 @@ $(function () {
     //}, 1000)
 
 
-
 });////////////////////////////////
 
 function append_playedItm(bcv, txt) {
@@ -43,6 +42,7 @@ function get_audio_info(bcv) {
     var Chp = mat[2]
     var Vrs = mat[3]
     this.audsrc = Audio_Bible_Struct.findAudioUrlFolderPath(Bk, Chp)
+    this.BkChp = Bk + Chp
 
     var BibleObj = VrsAudioRelativePosLen_NIV
     this.relativePos = BibleObj[Bk][Chp][Vrs][0]
@@ -57,9 +57,8 @@ function play_url_param_bcv(bcv) {
     $("#filename").val(audinfo.audsrc)
 
     init_ui_audio(audinfo)
-    
 }
-function init_ui_audio(audinfo){
+function init_ui_audio(audinfo) {
     setTimeout(function () {
 
         gvObj.src = audinfo.audsrc
@@ -77,7 +76,7 @@ function init_ui_audio(audinfo){
             //gvObj.currentTime = starttime
             //gvObj.play()
             $("#start_float").val(startime.toFixed(4))
-            $("#duration_float").val(duratime.toFixed(4))
+            $("#durat_float").val(duratime.toFixed(4))
             console.log(audinfo.audsrc)
             $("#start_loop").trigger("click")
         }, 500)
@@ -101,7 +100,7 @@ function gen_bible_table() {
         }
     }
     $("#myAudioFileNameSelect tbody").append(trs).find(".vrsItm").on("click", function () {
-        
+
         var bcv = $(this).attr("bcv")
         var audinfo = new get_audio_info(bcv)
 
@@ -119,15 +118,14 @@ function gen_bible_table() {
 }
 
 function playedItm_scroll2view() {
-    var txt = $(this).text()
-    var mat = txt.match(/([0-9a-zA-Z]{3}[0-9]+)[\:]*/)
-    console.log(mat)
-    var bkchp = mat[1]
+    var bcv = $(this).text()
+    var audinfo = new get_audio_info(bcv)
+   
     $(".hilihead").removeClass("hilihead")
     $(this).find(".playedItm").addClass("hilihead")
     $("#myAudioFileNameSelect td").each(function () {
         var itm = $(this).text().trim()
-        if (itm === bkchp) {
+        if (itm === audinfo.BkChp) {
             $(this)[0].scrollIntoView()
             $(this).addClass("hilihead")
             return
