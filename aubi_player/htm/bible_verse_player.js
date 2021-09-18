@@ -84,6 +84,7 @@ function init_ui_audio(audinfo) {
     setTimeout(function () {
 
         gvObj.src = audinfo.audsrc
+        gvObj.pause()
         //gvObj.muted = false;
         
 

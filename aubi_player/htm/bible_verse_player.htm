@@ -88,7 +88,9 @@
         gvObj.src = $("#filename").val()
         gvObj.currentTime = start_time
 
-        //alert(`gvObj.currentTime= ${gvObj.currentTime}=${start_time}+ ${offset_time}`)
+        $("#dbg").append(`gvObj.currentTime= ${gvObj.currentTime}=${start_time}+ ${offset_time}<br>`)
+
+        //alert()
 
         gvObj.play()
         gvObj.ontimeupdate = function () {
@@ -113,7 +115,7 @@
 
 
       $("#play_init").click(function(){
-        gvObj
+        
       })
 
 
@@ -213,6 +215,7 @@
     </thead>
     <tbody></tbody>
   </table><br>
+  <div id="dbg">dbg</div>
 
 
 </body>
