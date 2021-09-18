@@ -120,9 +120,9 @@ function init_ui_audio(audinfo) {
         //console.log("maxlen", maxlen)
         var startime = parseFloat(maxlen) * parseFloat(audinfo.relativePos)
         var duratime = parseFloat(maxlen) * parseFloat(audinfo.relativeLen)
-
-        var offset_time = parseFloat($("#offset_float").val())
-        start_time = startime + offset_time
+        var offsetime = parseFloat($("#offset_float").val())
+        
+        start_time = startime + offsetime
         stop_time = start_time + duratime
         gvObj.currentTime = start_time
         gvObj.muted = false;
