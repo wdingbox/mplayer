@@ -3,14 +3,14 @@
 $(function () {
     //console.log(NIV)
     $("#Bk_Chp_gen").on("click", function () {
+        $(this).addClass(".hili").hide()
         gen_bible_table()
     })
 
     const urlParams = new URLSearchParams(window.location.search);
     var bcv = urlParams.get('bcv');
-    var txt = urlParams.get('txt')
     if (bcv) {
-        play_url_param_bcv(bcv, txt)
+        play_url_param_bcv(bcv)
     }
     else {
         gen_bible_table()
@@ -23,12 +23,12 @@ $(function () {
 
 });////////////////////////////////
 
-function play_url_param_bcv(bcv, txt) {
+function play_url_param_bcv(bcv) {
     console.log("bcv=", bcv)
     bcv = bcv.replace(/\s/g, "")
     var mat = bcv.match("([0-9a-zA-Z]{3})([0-9]+)[\:]([0-9]+)")
     if (!mat) {
-        return alert("bcv value invalid.")
+        return alert("?bcv= value invalid.")
     }
     console.log(mat)
     var Bk = mat[1]
@@ -37,7 +37,9 @@ function play_url_param_bcv(bcv, txt) {
     var audsrc = Audio_Bible_Struct.findAudioUrlFolderPath(Bk, Chp)
 
     var BibleObj = VrsAudioRelativePosLen_NIV
-    var relativePosi = BibleObj[Bk][Chp][Vrs]
+    var relativePosi = BibleObj[Bk][Chp][Vrs][0]
+    var relativeLen = BibleObj[Bk][Chp][Vrs][1]
+    var txt = NIV[Bk][Chp][Vrs]
 
     var dis = `${bcv} <br>${txt}`
     $("#playname").html(dis)
@@ -55,10 +57,12 @@ function play_url_param_bcv(bcv, txt) {
                 return;
             }
             console.log("maxlen", maxlen)
-            var starttime = parseFloat(maxlen) * parseFloat(relativePosi)
+            var startime = parseFloat(maxlen) * parseFloat(relativePosi)
+            var duratime = parseFloat(maxlen) * parseFloat(relativeLen)
             //gvObj.currentTime = starttime
             //gvObj.play()
-            $("#start_float").val(starttime.toFixed(4))
+            $("#start_float").val(startime.toFixed(4))
+            $("#duration_float").val(duratime.toFixed(4))
             console.log(audsrc)
             $("#start_loop").trigger("click")
         }, 500)
