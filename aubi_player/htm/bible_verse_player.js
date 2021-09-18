@@ -16,7 +16,7 @@ $(function () {
         gen_bible_table()
     }
 
-    gvObj = document.getElementById('myAudio');
+
     //setTimeout(function () {
     //}, 1000)
 
@@ -56,16 +56,18 @@ function play_url_param_bcv(bcv) {
     init_ui_audio(audinfo)
 }
 function init_ui_audio(audinfo) {
+    if (!gvObj) {
+        gvObj = document.getElementById('myAudio');
+    }
     $("#filename").val(audinfo.audsrc)
     setTimeout(function () {
 
         gvObj.src = audinfo.audsrc
         gvObj.muted = false;
-
-        gvObj.onplay(function(){
+        function init_ui(){
             var maxlen = gvObj.duration;//(audio len in seconds)
             if (!maxlen) {
-                alert("duration failed:"+audinfo.audsrc)
+                alert("duration failed:" + audinfo.audsrc)
                 return;
             }
             console.log("maxlen", maxlen)
@@ -77,11 +79,19 @@ function init_ui_audio(audinfo) {
             $("#durat_float").val(duratime.toFixed(4))
             console.log(audinfo.audsrc)
             $("#start_loop").trigger("click")
-        })
+
+        }
+
+        if(gvObj.onplay){
+            gvObj.onplay(function () {
+            
+            })
+        }
+        
 
         setTimeout(function () {
-            
-        }, 500)
+            init_ui();
+        }, 1500)
     }, 0)
 }
 function gen_bible_table() {
