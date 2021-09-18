@@ -31,7 +31,7 @@ function append_playedItm(bcv, txt) {
         $("#playedBoard").append(dis)
     }
 }
-function play_url_param_bcv(bcv) {
+function get_audio_info(bcv) {
     console.log("bcv=", bcv)
     bcv = bcv.replace(/\s/g, "")
     var mat = bcv.match("([0-9a-zA-Z]{3})([0-9]+)[\:]([0-9]+)")
@@ -42,20 +42,23 @@ function play_url_param_bcv(bcv) {
     var Bk = mat[1]
     var Chp = mat[2]
     var Vrs = mat[3]
-    var audsrc = Audio_Bible_Struct.findAudioUrlFolderPath(Bk, Chp)
+    this.audsrc = Audio_Bible_Struct.findAudioUrlFolderPath(Bk, Chp)
 
     var BibleObj = VrsAudioRelativePosLen_NIV
-    var relativePosi = BibleObj[Bk][Chp][Vrs][0]
-    var relativeLen = BibleObj[Bk][Chp][Vrs][1]
-    var txt = NIV[Bk][Chp][Vrs]
+    this.relativePos = BibleObj[Bk][Chp][Vrs][0]
+    this.relativeLen = BibleObj[Bk][Chp][Vrs][1]
+    this.txt = NIV[Bk][Chp][Vrs]
+}
+function play_url_param_bcv(bcv) {
+    var audinfo = new get_audio_info(bcv)
 
-    append_playedItm(bcv, txt)
+    append_playedItm(bcv, audinfo.txt)
 
-    $("#filename").val(audsrc)
+    $("#filename").val(audinfo.audsrc)
 
     setTimeout(function () {
 
-        gvObj.src = audsrc
+        gvObj.src = audinfo.audsrc
         gvObj.muted = false;
 
         setTimeout(function () {
@@ -65,13 +68,13 @@ function play_url_param_bcv(bcv) {
                 return;
             }
             console.log("maxlen", maxlen)
-            var startime = parseFloat(maxlen) * parseFloat(relativePosi)
-            var duratime = parseFloat(maxlen) * parseFloat(relativeLen)
+            var startime = parseFloat(maxlen) * parseFloat(audinfo.relativePos)
+            var duratime = parseFloat(maxlen) * parseFloat(audinfo.relativeLen)
             //gvObj.currentTime = starttime
             //gvObj.play()
             $("#start_float").val(startime.toFixed(4))
             $("#duration_float").val(duratime.toFixed(4))
-            console.log(audsrc)
+            console.log(audinfo.audsrc)
             $("#start_loop").trigger("click")
         }, 500)
     }, 0)
@@ -80,53 +83,38 @@ function play_url_param_bcv(bcv) {
 function gen_bible_table() {
 
     var BibleObj = VrsAudioRelativePosLen_NIV
-    var tab = ""
+    var trs = ""
     for (let Bk in BibleObj) {
         console.log(Bk)
         for (let Chp in BibleObj[Bk]) {
             //console.log(Bk)
-            tab += `<tr><td>${Bk}${Chp}</td><td>`
+            trs += `<tr><td>${Bk}${Chp}</td><td>`
             for (let Vrs in BibleObj[Bk][Chp]) {
-                var relativePosi = BibleObj[Bk][Chp][Vrs][0]
-                var relativeLen = BibleObj[Bk][Chp][Vrs][1]
-                //console.log()
-                var Chp3 = Chp.padStart(3, "0")
-                var src = Audio_Bible_Struct.findAudioUrlFolderPath(Bk, Chp)
                 var bcv = `${Bk}${Chp}:${Vrs}`
-
-                tab += `<a class='vrsItm' src='${src}' title='${bcv}' bcv='${bcv}' relativePosi='${relativePosi}' relativeLen='${relativeLen}' Bok='${Bk}' Chp='${Chp}' Vrs='${Vrs}'> ${Vrs}</a>,`;
+                trs += `<a class='vrsItm' title='${bcv}' bcv='${bcv}'> ${Vrs}</a>,`;
             }
-            tab = tab.replace(/,$/, "")
-            tab += "</td></tr>"
+            trs = trs.replace(/[\,]$/, "")
+            trs += "</td></tr>"
         }
     }
-    $("#myAudioFileNameSelect tbody").append(tab).find(".vrsItm").on("click", function () {
-        var audsrc = $(this).attr("src")
-
-        var Bok = $(this).attr("Bok")
-        var Chp = $(this).attr("Chp")
-        var Vrs = $(this).attr("Vrs")
+    $("#myAudioFileNameSelect tbody").append(trs).find(".vrsItm").on("click", function () {
+        
         var bcv = $(this).attr("bcv")
-        var txt = NIV[Bok][Chp][Vrs]
+        var audinfo = new get_audio_info(bcv)
 
-        var relativePosi = parseFloat($(this).attr("relativePosi"))
-        var relativeLen = parseFloat($(this).attr("relativeLen"))
         $(".hili").removeClass("hili")
         $(this).addClass("hili")
 
 
-        var title = $(this).attr("title")
+        append_playedItm(bcv, audinfo.txt)
 
-
-        append_playedItm(bcv, txt)
-
-        $("#filename").val(audsrc)
+        $("#filename").val(audinfo.audsrc)
 
         //gvObj = null
         //gvObj = document.getElementById('myAudio');
 
         setTimeout(function () {
-            gvObj.src = audsrc
+            gvObj.src = audinfo.audsrc
             //gvObj.play()
             //gvObj.pause()
             setTimeout(function () {
@@ -136,14 +124,14 @@ function gen_bible_table() {
                     return;
                 }
                 console.log("maxlen", maxlen)
-                var starttime = maxlen * relativePosi
-                var duratime = maxlen * relativeLen
+                var startime = maxlen * audinfo.relativePos
+                var duratime = maxlen * audinfo.relativeLen
 
                 //gvObj.currentTime = starttime
                 //gvObj.play()
-                console.log(audsrc)
+                //console.log(audsrc)
 
-                $("#start_float").val(starttime.toFixed(4))
+                $("#start_float").val(startime.toFixed(4))
                 $("#duration_float").val(duratime.toFixed(4))
 
                 $("#start_loop").trigger("click")
