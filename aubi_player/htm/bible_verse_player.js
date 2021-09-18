@@ -51,9 +51,8 @@ function get_audio_info(bcv) {
 }
 function play_url_param_bcv(bcv) {
     var audinfo = new get_audio_info(bcv)
-
     append_playedItm(bcv, audinfo.txt)
-    //init_ui_audio(audinfo)
+    init_ui_audio(audinfo)
 }
 function gen_bible_table() {
 
@@ -121,7 +120,7 @@ function init_ui_audio(audinfo) {
         var startime = parseFloat(maxlen) * parseFloat(audinfo.relativePos)
         var duratime = parseFloat(maxlen) * parseFloat(audinfo.relativeLen)
         var offsetime = parseFloat($("#offset_float").val())
-        
+
         start_time = startime + offsetime
         stop_time = start_time + duratime
         gvObj.currentTime = start_time
@@ -147,15 +146,17 @@ function init_ui_audio(audinfo) {
     }
 }
 function loop_start() {
-    var dur_time = parseFloat($("#durat_float").val())
-    var offset_time = parseFloat($("#offset_float").val())
-    var start_time = offset_time + parseFloat($("#start_float").val())
-    var stop_time = start_time + dur_time
-    var str = `gvObj.currentTime= ${gvObj.currentTime}=${start_time}+ ${offset_time}<br>`
-    $("#dbg").append(str)
+    var offsetime = parseFloat($("#offset_float").val())
+    var startTime = $("#start_float").val()
+    if("0.0" === startTime){
+         alert("not init yet.")
+    }
+
+    var start_time = offsetime + parseFloat(startTime)
+
+    $("#dbg").append("<br>loop_start: start_time=" + start_time)
 
     gvObj.src = $("#filename").val()
     gvObj.muted = false;
     gvObj.currentTime = start_time
-    //gvObj.play()
 }
