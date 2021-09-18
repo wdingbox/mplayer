@@ -62,10 +62,10 @@ function init_ui_audio(audinfo) {
         gvObj.src = audinfo.audsrc
         gvObj.muted = false;
 
-        setTimeout(function () {
+        gvObj.onplay(function(){
             var maxlen = gvObj.duration;//(audio len in seconds)
             if (!maxlen) {
-                alert("try again")
+                alert("duration failed:"+audinfo.audsrc)
                 return;
             }
             console.log("maxlen", maxlen)
@@ -77,6 +77,10 @@ function init_ui_audio(audinfo) {
             $("#durat_float").val(duratime.toFixed(4))
             console.log(audinfo.audsrc)
             $("#start_loop").trigger("click")
+        })
+
+        setTimeout(function () {
+            
         }, 500)
     }, 0)
 }
@@ -123,6 +127,6 @@ function playedItm_scroll2view() {
             return
         }
     })
-    
+
     init_ui_audio(audinfo)
 }
