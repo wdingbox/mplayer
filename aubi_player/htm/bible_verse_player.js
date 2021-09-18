@@ -24,6 +24,13 @@ $(function () {
 
 });////////////////////////////////
 
+function append_playedItm(bcv, txt) {
+    var nExist = $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).length
+    if (!nExist) {
+        var dis = $(`<div><a class='playedItm' bcv='${bcv}'>${bcv}</a><br><a>${txt}</a></div>`).on("click", playedItm_scroll2view)
+        $("#playedBoard").append(dis)
+    }
+}
 function play_url_param_bcv(bcv) {
     console.log("bcv=", bcv)
     bcv = bcv.replace(/\s/g, "")
@@ -42,8 +49,8 @@ function play_url_param_bcv(bcv) {
     var relativeLen = BibleObj[Bk][Chp][Vrs][1]
     var txt = NIV[Bk][Chp][Vrs]
 
-    var dis = $(`<div><a class='playedItm' bcv='${bcv}'>${bcv}</a><br><a>${txt}</a></div>`).on("click", playedItm_scroll2view)
-    $("#playedBoard").append(dis)
+    append_playedItm(bcv, txt)
+
     $("#filename").val(audsrc)
 
     setTimeout(function () {
@@ -110,11 +117,8 @@ function gen_bible_table() {
 
         var title = $(this).attr("title")
 
-        var dis = $(`<div><a class='playedItm' bcv='${bcv}'>${bcv}</a><br><a>${txt}</a></div>`).on("click", playedItm_scroll2view)
-        var nExist = $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).length
-        if (!nExist) {
-            $("#playedBoard").append(dis)
-        }
+
+        append_playedItm(bcv, txt)
 
         $("#filename").val(audsrc)
 
@@ -159,6 +163,8 @@ function playedItm_scroll2view() {
     var mat = txt.match(/([0-9a-zA-Z]{3}[0-9]+)[\:]*/)
     console.log(mat)
     var bkchp = mat[1]
+    $(".hilihead").removeClass("hilihead")
+    $(this).find(".playedItm").addClass("hilihead")
     $("#myAudioFileNameSelect td").each(function () {
         var itm = $(this).text().trim()
         if (itm === bkchp) {
