@@ -92,6 +92,8 @@
         gvObj.ontimeupdate = function () {
           if (gvObj.currentTime >= stop_time) {
             gvObj.pause()
+
+            ////// loop after 3s. 
             setTimeout(function () {
               gvObj.currentTime = start_time
               gvObj.play()
