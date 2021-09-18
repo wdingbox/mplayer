@@ -123,6 +123,7 @@ function init_ui_audio(audinfo) {
 
         start_time = startime + offsetime
         stop_time = start_time + duratime
+
         gvObj.currentTime = start_time
         gvObj.muted = false;
         //gvObj.play()
@@ -130,6 +131,20 @@ function init_ui_audio(audinfo) {
         $("#durat_float").val(duratime.toFixed(4))
 
     }
+
+    gvObj.addEventListener('ended', (event) => {
+        $("#dbg").append('<br>Video stopped either because 1) it was over, ' +
+            'or 2) no further data is available.');
+            setTimeout(function () {
+                if (start_time > 0) {
+                    gvObj.currentTime = start_time
+                    gvObj.play()
+                }
+            }, 3000)
+    });
+    gvObj.onemptied = (event) => {
+        $("#dbg").append('<br>Uh oh. The media is empty. Did you call load()?');
+    };
     gvObj.ontimeupdate = function () {
         if (-1 === stop_time) return
         if (gvObj.currentTime >= stop_time) {
@@ -148,8 +163,8 @@ function init_ui_audio(audinfo) {
 function loop_start() {
     var offsetime = parseFloat($("#offset_float").val())
     var startTime = $("#start_float").val()
-    if("0.0" === startTime){
-         alert("not init yet.")
+    if ("0.0" === startTime) {
+        alert("not init yet.")
     }
 
     var start_time = offsetime + parseFloat(startTime)
