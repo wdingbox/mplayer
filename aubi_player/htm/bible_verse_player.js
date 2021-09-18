@@ -56,6 +56,27 @@ function play_url_param_bcv(bcv) {
     init_ui_audio(audinfo)
 }
 function init_ui_audio(audinfo) {
+    function init_ui(audinfo){
+        var maxlen = gvObj.duration;//(audio len in seconds)
+        if (!maxlen) {
+            alert("duration failed:" + audinfo.audsrc)
+            return;
+        }
+        console.log("maxlen", maxlen)
+        var startime = parseFloat(maxlen) * parseFloat(audinfo.relativePos)
+        var duratime = parseFloat(maxlen) * parseFloat(audinfo.relativeLen)
+        //gvObj.currentTime = starttime
+        //gvObj.play()
+        $("#start_float").val(startime.toFixed(4))
+        $("#durat_float").val(duratime.toFixed(4))
+        console.log(audinfo.audsrc)
+
+        setTimeout(function(){
+            $("#start_loop").focus()
+            $("#start_loop").trigger("click")
+        },100)
+    }
+
     if (!gvObj) {
         gvObj = document.getElementById('myAudio');
     }
@@ -63,24 +84,8 @@ function init_ui_audio(audinfo) {
     setTimeout(function () {
 
         gvObj.src = audinfo.audsrc
-        gvObj.muted = false;
-        function init_ui(){
-            var maxlen = gvObj.duration;//(audio len in seconds)
-            if (!maxlen) {
-                alert("duration failed:" + audinfo.audsrc)
-                return;
-            }
-            console.log("maxlen", maxlen)
-            var startime = parseFloat(maxlen) * parseFloat(audinfo.relativePos)
-            var duratime = parseFloat(maxlen) * parseFloat(audinfo.relativeLen)
-            //gvObj.currentTime = starttime
-            //gvObj.play()
-            $("#start_float").val(startime.toFixed(4))
-            $("#durat_float").val(duratime.toFixed(4))
-            console.log(audinfo.audsrc)
-            $("#start_loop").trigger("click")
-
-        }
+        //gvObj.muted = false;
+        
 
         if(gvObj.onplay){
             gvObj.onplay(function () {
@@ -88,9 +93,8 @@ function init_ui_audio(audinfo) {
             })
         }
         
-
         setTimeout(function () {
-            init_ui();
+            init_ui(audinfo);
         }, 1500)
     }, 0)
 }
