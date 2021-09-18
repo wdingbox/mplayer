@@ -145,3 +145,27 @@ function playedItm_scroll2view() {
 
     init_ui_audio(audinfo)
 }
+
+function loop_start(){
+    var dur_time = parseFloat($("#durat_float").val())
+    var offset_time = parseFloat($("#offset_float").val())
+    var start_time = offset_time + parseFloat($("#start_float").val())
+    var stop_time = start_time + dur_time
+    $("#dbg").append(`gvObj.currentTime= ${gvObj.currentTime}=${start_time}+ ${offset_time}<br>`)
+
+    gvObj.src = $("#filename").val()
+    gvObj.pause()
+    gvObj.currentTime = start_time 
+    gvObj.play()
+    gvObj.ontimeupdate = function () {
+      if (gvObj.currentTime >= stop_time) {
+        gvObj.pause()
+
+        ////// loop after 3s. 
+        setTimeout(function () {
+          gvObj.currentTime = start_time
+          gvObj.play()
+        }, 3000)
+      }
+    }
+}
