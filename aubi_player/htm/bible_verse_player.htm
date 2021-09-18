@@ -88,7 +88,7 @@
         gvObj.src = $("#filename").val()
         gvObj.currentTime = start_time
 
-        alert(`ok gvObj.currentTime= + ${gvObj.currentTime},${dur_time}, ${offset_time}`)
+        alert(`gvObj.currentTime= ${gvObj.currentTime}=${start_time}+ ${offset_time}`)
 
         gvObj.play()
         gvObj.ontimeupdate = function () {
