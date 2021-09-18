@@ -103,12 +103,6 @@ function playedItm_scroll2view() {
 }
 
 function init_ui_audio(audinfo) {
-    function init_ui(audinfo) {
-
-        //console.log(audinfo.audsrc)
-    }
-
-
     if (!gvObj) {
         gvObj = document.getElementById('myAudio');
     }
@@ -130,7 +124,7 @@ function init_ui_audio(audinfo) {
         var offset_time = parseFloat($("#offset_float").val())
         start_time = startime + offset_time
         stop_time = start_time + duratime
-        gvObj.currentTime = startime
+        gvObj.currentTime = start_time
         gvObj.muted = false;
         //gvObj.play()
         $("#start_float").val(startime.toFixed(4))
@@ -163,16 +157,5 @@ function loop_start() {
     gvObj.src = $("#filename").val()
     gvObj.muted = false;
     gvObj.currentTime = start_time
-    gvObj.play()
-    gvObj.ontimeupdate = function () {
-        if (gvObj.currentTime >= stop_time) {
-            gvObj.pause()
-
-            ////// loop after 3s. 
-            setTimeout(function () {
-                gvObj.currentTime = start_time
-                gvObj.play()
-            }, 3000)
-        }
-    }
+    //gvObj.play()
 }
