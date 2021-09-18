@@ -57,7 +57,7 @@
 
     .playedItm {
       border-style: solid;
-      border-color:black;
+      border-color: black;
       border-width: 1px;
     }
   </style>
@@ -87,6 +87,8 @@
 
         gvObj.src = $("#filename").val()
         gvObj.currentTime = start_time
+
+        alert("ok gvObj.currentTime=" + gvObj.currentTime)
 
         gvObj.play()
         gvObj.ontimeupdate = function () {
