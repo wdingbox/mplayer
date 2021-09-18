@@ -53,7 +53,7 @@ function play_url_param_bcv(bcv) {
     var audinfo = new get_audio_info(bcv)
 
     append_playedItm(bcv, audinfo.txt)
-    init_ui_audio(audinfo)
+    //init_ui_audio(audinfo)
 }
 function init_ui_audio(audinfo) {
     function init_ui(audinfo){

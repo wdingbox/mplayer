@@ -88,7 +88,7 @@
         gvObj.src = $("#filename").val()
         gvObj.currentTime = start_time
 
-        alert(`gvObj.currentTime= ${gvObj.currentTime}=${start_time}+ ${offset_time}`)
+        //alert(`gvObj.currentTime= ${gvObj.currentTime}=${start_time}+ ${offset_time}`)
 
         gvObj.play()
         gvObj.ontimeupdate = function () {
@@ -109,6 +109,11 @@
         txt += " = " + Util.convert_seconds_to_hhmmss(txt)
         $("#show_stop_time").text(txt)
         gvObj.pause()
+      })
+
+
+      $("#play_init").click(function(){
+        gvObj
       })
 
 
@@ -142,6 +147,7 @@
   <a>x </a><a id="speed">1.0</a>
   <button id="start_loop">loop</button>
   <button id="stop_loop">stop</button>
+  <button id="play_init">init</button>
   <a id="show_stop_time"></a>
   <br>
 
