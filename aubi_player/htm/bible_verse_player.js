@@ -53,12 +53,10 @@ function play_url_param_bcv(bcv) {
     var audinfo = new get_audio_info(bcv)
 
     append_playedItm(bcv, audinfo.txt)
-
-    $("#filename").val(audinfo.audsrc)
-
     init_ui_audio(audinfo)
 }
 function init_ui_audio(audinfo) {
+    $("#filename").val(audinfo.audsrc)
     setTimeout(function () {
 
         gvObj.src = audinfo.audsrc
@@ -100,27 +98,21 @@ function gen_bible_table() {
         }
     }
     $("#myAudioFileNameSelect tbody").append(trs).find(".vrsItm").on("click", function () {
-
         var bcv = $(this).attr("bcv")
         var audinfo = new get_audio_info(bcv)
 
         $(".hili").removeClass("hili")
         $(this).addClass("hili")
 
-
         append_playedItm(bcv, audinfo.txt)
-
-        $("#filename").val(audinfo.audsrc)
-
         init_ui_audio(audinfo)
-
     });
 }
 
 function playedItm_scroll2view() {
     var bcv = $(this).text()
     var audinfo = new get_audio_info(bcv)
-   
+
     $(".hilihead").removeClass("hilihead")
     $(this).find(".playedItm").addClass("hilihead")
     $("#myAudioFileNameSelect td").each(function () {
@@ -131,4 +123,6 @@ function playedItm_scroll2view() {
             return
         }
     })
+    
+    init_ui_audio(audinfo)
 }
