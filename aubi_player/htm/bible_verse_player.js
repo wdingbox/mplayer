@@ -116,7 +116,7 @@ function init_ui_audio(audinfo) {
 
     gvObj.src = audinfo.audsrc
     gvObj.muted = true;
-    var stop_time = -1
+    var stop_time = -1, start_time = -1
     gvObj.onplay = function () {
         var maxlen = gvObj.duration;//(audio len in seconds)
         if (!maxlen) {
@@ -126,7 +126,10 @@ function init_ui_audio(audinfo) {
         //console.log("maxlen", maxlen)
         var startime = parseFloat(maxlen) * parseFloat(audinfo.relativePos)
         var duratime = parseFloat(maxlen) * parseFloat(audinfo.relativeLen)
-        stop_time = startime + duratime
+
+        var offset_time = parseFloat($("#offset_float").val())
+        start_time = startime + offset_time
+        stop_time = start_time + duratime
         gvObj.currentTime = startime
         gvObj.muted = false;
         //gvObj.play()
@@ -141,8 +144,10 @@ function init_ui_audio(audinfo) {
 
             ////// loop after 3s. 
             setTimeout(function () {
-                gvObj.currentTime = start_time
-                gvObj.play()
+                if (start_time > 0) {
+                    gvObj.currentTime = start_time
+                    gvObj.play()
+                }
             }, 3000)
         }
     }
