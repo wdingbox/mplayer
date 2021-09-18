@@ -10,7 +10,7 @@ $(function () {
     var bcv = urlParams.get('bcv');
     var txt = urlParams.get('txt')
     if (bcv) {
-        play_param_bcv(bcv, txt)
+        play_url_param_bcv(bcv, txt)
     }
     else {
         gen_bible_table()
@@ -23,7 +23,7 @@ $(function () {
 
 });////////////////////////////////
 
-function play_param_bcv(bcv, txt) {
+function play_url_param_bcv(bcv, txt) {
     console.log("bcv=", bcv)
     bcv = bcv.replace(/\s/g, "")
     var mat = bcv.match("([0-9a-zA-Z]{3})([0-9]+)[\:]([0-9]+)")
@@ -58,7 +58,7 @@ function play_param_bcv(bcv, txt) {
             var starttime = parseFloat(maxlen) * parseFloat(relativePosi)
             //gvObj.currentTime = starttime
             //gvObj.play()
-            $("#start_float").val(starttime)
+            $("#start_float").val(starttime.toFixed(4))
             console.log(audsrc)
             $("#start_loop").trigger("click")
         }, 500)
@@ -129,8 +129,8 @@ function gen_bible_table() {
                 //gvObj.play()
                 console.log(audsrc)
 
-                $("#start_float").val(starttime)
-                $("#duration_float").val(duratime)
+                $("#start_float").val(starttime.toFixed(4))
+                $("#duration_float").val(duratime.toFixed(4))
 
                 $("#start_loop").trigger("click")
             }, 500)
