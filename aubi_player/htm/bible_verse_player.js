@@ -21,6 +21,22 @@ $(function () {
     //}, 1000)
 
 
+    $("#playtext").on("click", function () {
+        var txt = $(this).text()
+        var mat = txt.match(/([0-9a-zA-Z]{3}[0-9]+)[\:]*/)
+        console.log(mat)
+        var bkchp = mat[1]
+        $("#myAudioFileNameSelect td").each(function(){
+            var itm = $(this).text().trim()
+            if(itm === bkchp){
+                $(this)[0].scrollIntoView()
+                $(this).addClass(".hili")
+                return
+            }
+        })
+
+    })
+
 });////////////////////////////////
 
 function play_url_param_bcv(bcv) {
@@ -42,7 +58,7 @@ function play_url_param_bcv(bcv) {
     var txt = NIV[Bk][Chp][Vrs]
 
     var dis = `${bcv} <br>${txt}`
-    $("#playname").html(dis)
+    $("#playtext").html(dis)
     $("#filename").val(audsrc)
 
     setTimeout(function () {
@@ -107,7 +123,7 @@ function gen_bible_table() {
         $(this).addClass("hili")
 
         var title = $(this).attr("title")
-        $("#playname").html(title + "<br>" + Txt)
+        $("#playtext").html(title + "<br>" + Txt)
 
         $("#filename").val(audsrc)
 
