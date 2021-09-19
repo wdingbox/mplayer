@@ -84,12 +84,14 @@
         var inp = $(this).parent().find("input:eq(0)")
         var val = inp.val()
         inp.val(parseFloat(val) + 1)
+        update_offsets_data()
       })
 
       $(".minusnum").on("click", function () {
         var inp = $(this).parent().find("input:eq(0)")
         var val = inp.val()
         inp.val(parseFloat(val) - 1)
+        update_offsets_data()
       })
 
 

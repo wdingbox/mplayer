@@ -43,24 +43,39 @@ function get_audio_meta(bcv) {
         return alert(bcv + ": invalid.")
     }
     //console.log(mat)
-    var Bk = mat[1]
+    var Bok = mat[1]
     var Chp = mat[2]
     var Vrs = mat[3]
-    this.audsrc = Audio_Bible_Struct.findAudioUrlFolderPath(Bk, Chp)
-    this.BkChp = Bk + Chp
+    this.audsrc = Audio_Bible_Struct.findAudioUrlFolderPath(Bok, Chp)
+    this.BkChp = Bok + Chp
+
+    this.Bok = Bok
+    this.Chp = Chp
+    this.Vrs = Vrs
 
     var BibleObj = VrsAudioRelativePosLen_NIV
-    this.relativePos = BibleObj[Bk][Chp][Vrs][0]
-    this.relativeLen = BibleObj[Bk][Chp][Vrs][1]
-    this.txt = NIV[Bk][Chp][Vrs]
+    this.relativePos = BibleObj[Bok][Chp][Vrs][0]
+    this.relativeLen = BibleObj[Bok][Chp][Vrs][1]
+    this.txt = NIV[Bok][Chp][Vrs]
 
-    if ("array" === typeof (bible_verse_playoffsets[Bk][Chp][Vrs])) {
-        this.offset_Star = bible_verse_playoffsets[Bk][Chp][Vrs][0]
-        this.offset_Span = bible_verse_playoffsets[Bk][Chp][Vrs][1]
+    if ("array" === typeof (bible_verse_playoffsets[Bok][Chp][Vrs])) {
+        this.offset_Star = bible_verse_playoffsets[Bok][Chp][Vrs][0]
+        this.offset_Span = bible_verse_playoffsets[Bok][Chp][Vrs][1]
     }
 }
-get_audio_meta.prototype.save_offsets = function () {
-
+get_audio_meta.prototype.offsetary = function (ar) {
+    var Bok = this.Bok
+    var Chp = this.Chp
+    var Vrs = this.Vrs
+    if ("object" === typeof (ar) && ar.length > 1) {//set
+        bible_verse_playoffsets[Bok][Chp][Vrs] = ar
+    } else {//get
+        if ("object" === typeof (bible_verse_playoffsets[Bok][Chp][Vrs])) {
+            return bible_verse_playoffsets[Bok][Chp][Vrs]
+        } else {
+            return null
+        }
+    }
 }
 
 function play_url_param_bcv(bcv) {
@@ -145,6 +160,21 @@ function create_audio_uictr(audinfo) {
         var offsettime = parseFloat($("#offset_star").val())
         var offsetspan = parseFloat($("#offset_span").val())
 
+
+        var offary = audinfo.offsetary()
+        if (offary && offary.length > 1) {
+            offsettime = offary[0]
+            offsetspan = offary[1]
+            $("#offset_star").val(offsettime)
+            $("#offset_span").val(offsetspan)
+            $("#offset_star").addClass("readyplay")
+            $("#offset_span").addClass("readyplay")
+        } else {
+            audinfo.offsetary([offsettime, offsetspan])
+            $("#offset_star").removeClass("readyplay")
+            $("#offset_span").removeClass("readyplay")
+        }
+
         $("#start_float").val(startime.toFixed(4))
         $("#durat_float").val(duratime.toFixed(4))
 
@@ -216,4 +246,10 @@ function loop_start() {
 
 function store_offsets_data() {
 
+}
+
+function update_offsets_data() {
+    var x = parseInt($("#offset_star").val())
+    var y = parseInt($("#offset_span").val())
+    gvObj.m_audinfo.offsetary([x,y])
 }
