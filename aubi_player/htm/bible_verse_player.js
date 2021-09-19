@@ -111,6 +111,7 @@ function init_ui_audio(audinfo) {
     gvObj.muted = true;
     var stop_time = -1, start_time = -1
     gvObj.onplay = function () {
+        $("#dbg").append('<br>Video onplay.');
         var maxlen = gvObj.duration;//(audio len in seconds)
         if (!maxlen) {
             alert(maxlen + "duration failed:" + audinfo.audsrc)
@@ -131,7 +132,7 @@ function init_ui_audio(audinfo) {
         $("#durat_float").val(duratime.toFixed(4))
     }
 
-    gvObj.addEventListener('ended', (event) => {
+    gvObj.onended = (event) => {
         $("#dbg").append('<br>Video stopped either because 1) it was over, ' +
             'or 2) no further data is available.');
         setTimeout(function () {
@@ -140,7 +141,7 @@ function init_ui_audio(audinfo) {
                 gvObj.play()
             }
         }, 3000)
-    });
+    };
     gvObj.onemptied = (event) => {
         $("#dbg").append('<br>Uh oh. The media is empty. Did you call load()?');
     };
