@@ -121,7 +121,7 @@ function init_ui_audio(audinfo) {
             alert(maxlen + "duration failed:" + audinfo.audsrc)
             return;
         }
-    
+
         var startime = parseFloat(maxlen) * parseFloat(audinfo.relativePos)
         var duratime = parseFloat(maxlen) * parseFloat(audinfo.relativeLen)
         var offsettime = parseFloat($("#offset_star").val())
@@ -139,10 +139,10 @@ function init_ui_audio(audinfo) {
     }
 
     gvObj.onended = (event) => {
-        $("#dbg").append('<br>Video stopped either because 1) it was over, ' +
-            'or 2) no further data is available.');
+        if (gvObj.m_loop_bPaused === true) return
+        $("#dbg").append('<br>Video stopped either because 1) it was over, ' + 'or 2) no further data is available.');
         setTimeout(function () {
-            if(gvObj.m_bPaused === true) return
+            if (gvObj.m_bPaused === true) return
             if (start_time > 0) {
                 gvObj.currentTime = start_time
                 gvObj.play()
@@ -166,7 +166,7 @@ function init_ui_audio(audinfo) {
         if (-1 === stop_time) return
         if (gvObj.currentTime >= stop_time) {
             gvObj.pause()
-            if(gvObj.m_loop_bPaused === true) return
+            if (gvObj.m_loop_bPaused === true) return
 
             ////// loop after 3s. 
             setTimeout(function () {
