@@ -26,7 +26,8 @@ $(function () {
 function append_playedItm(bcv, txt) {
     var nExist = $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).length
     if (!nExist) {
-        var dis = $(`<div><a class='playedItm' bcv='${bcv}'>${bcv}</a><br><a>${txt}</a></div>`).on("click", playedItm_scroll2view)
+        var dis = $(`<div><a class='playedItm' bcv='${bcv}'>${bcv}</a><br><a>${txt}</a></div>`);
+        $(dis).find(".playedItm").on("click", playedItm_scroll2view)
         $("#playedBoard").append(dis)
     }
 }
@@ -88,16 +89,16 @@ function playedItm_scroll2view() {
     var audinfo = new get_audio_info(bcv)
 
     $(".hilihead").removeClass("hilihead")
-    $(this).find(".playedItm").addClass("hilihead")
+    $(this).parentsUntil("#playedBoard").find(".playedItm").addClass("hilihead")
     $("#myAudioFileNameSelect td").each(function () {
         var itm = $(this).text().trim()
         if (itm === audinfo.BkChp) {
-            $(this)[0].scrollIntoView()
+            $(this)[0].scrollIntoView(true)
             $(this).addClass("hilihead")
             return
         }
     })
-
+    $("body")[0].scrollIntoView(true)
     init_ui_audio(audinfo)
 }
 
