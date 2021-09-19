@@ -3,7 +3,7 @@
 $(function () {
     //console.log(NIV)
     $("#Bk_Chp_gen").on("click", function () {
-        $(this).addClass(".hili").hide()
+        $(this).hide()
         gen_bible_table()
     })
 
@@ -30,6 +30,9 @@ function append_playedItm(bcv, txt) {
         $(dis).find(".playedItm").on("click", playedItm_scroll2view)
         $("#playedBoard").append(dis)
     }
+
+        $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).addClass("hili")
+    
 }
 function get_audio_info(bcv) {
     //console.log("bcv=", bcv)
@@ -131,7 +134,7 @@ function init_ui_audio(audinfo) {
         $("#start_float").val(startime.toFixed(4))
         $("#durat_float").val(duratime.toFixed(4))
 
-        
+
         $("#start_float").addClass("readyplay")
         $("#durat_float").addClass("readyplay")
 
@@ -169,7 +172,7 @@ function init_ui_audio(audinfo) {
         if (-1 === stop_time) return
         if (gvObj.currentTime >= stop_time) {
             gvObj.pause()
-            
+
             ////// loop after 3s. 
             if (gvObj.m_loop_bPaused === true) return
             setTimeout(function () {
