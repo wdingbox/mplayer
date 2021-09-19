@@ -90,7 +90,7 @@ function search_table_item_scroll2view(tabRowHead){
     $("#myAudioFileNameSelect td").each(function () {
         var itm = $(this).text().trim()
         if (itm === tabRowHead) {
-            $(this)[0].scrollIntoView(true)
+            $(this)[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' }) //relative scrollintoview.
             $(this).addClass("hilihead")
             return
         }
@@ -104,7 +104,7 @@ function playedItm_scroll2view() {
     $(this).parentsUntil("#playedBoard").find(".playedItm").addClass("hilihead")
 
     search_table_item_scroll2view(audinfo.BkChp)
-    $("body")[0].scrollIntoView(true)
+    //$("body")[0].scrollIntoView(true)
     init_ui_audio(audinfo)
 }
 
