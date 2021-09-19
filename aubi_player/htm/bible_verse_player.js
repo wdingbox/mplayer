@@ -173,7 +173,7 @@ function init_ui_audio(audinfo) {
         $("#dbg").append(`<br>onpaused maxlen=${maxlen}`);
 
         var txt = "" + gvObj.currentTime
-        txt += " = " + Util.convert_seconds_to_hhmmss(txt)
+        txt += " = " + TimeFormatConverter.convert_seconds_to_hhmmss(txt)
         $("#show_stop_time").text(txt)
     };
     gvObj.ontimeupdate = function () {
