@@ -139,12 +139,10 @@ function init_ui_audio(audinfo) {
     }
 
     gvObj.onended = (event) => {
-        if (gvObj.m_loop_bPaused === true) return
         $("#dbg").append('<br>Video stopped either because 1) it was over, ' + 'or 2) no further data is available.');
+        if (gvObj.m_loop_bPaused === true) return
         setTimeout(function () {
-            if (gvObj.m_bPaused === true) return
             if (start_time > 0) {
-                gvObj.currentTime = start_time
                 gvObj.play()
             }
         }, 3000)
@@ -166,12 +164,11 @@ function init_ui_audio(audinfo) {
         if (-1 === stop_time) return
         if (gvObj.currentTime >= stop_time) {
             gvObj.pause()
-            if (gvObj.m_loop_bPaused === true) return
-
+            
             ////// loop after 3s. 
+            if (gvObj.m_loop_bPaused === true) return
             setTimeout(function () {
                 if (start_time > 0) {
-                    //gvObj.currentTime = start_time
                     gvObj.play()
                 }
             }, 3000)
