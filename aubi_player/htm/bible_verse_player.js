@@ -249,8 +249,7 @@ function store_offsets_data() {
 }
 
 function update_offsets_data() {
-    var x = parstInt($("#offset_star").val())
-    var y = parstInt($("#offset_span").val())
+    var x = parseInt($("#offset_star").val())
+    var y = parseInt($("#offset_span").val())
     gvObj.m_audinfo.offsetary([x,y])
-
 }
