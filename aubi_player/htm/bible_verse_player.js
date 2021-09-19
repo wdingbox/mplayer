@@ -157,7 +157,6 @@ function init_ui_audio(audinfo) {
     gvObj.onpause = (event) => {
         var maxlen = gvObj.duration;//(audio len in seconds)
         $("#dbg").append(`<br>onpaused maxlen=${maxlen}`);
-        gvObj.m_loop_bPaused = true
 
         var txt = "" + gvObj.currentTime
         txt += " = " + Util.convert_seconds_to_hhmmss(txt)
