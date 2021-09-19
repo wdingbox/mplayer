@@ -86,21 +86,24 @@ function gen_bible_table() {
         init_ui_audio(audinfo)
     });
 }
-
+function search_table_item_scroll2view(tabRowHead){
+    $("#myAudioFileNameSelect td").each(function () {
+        var itm = $(this).text().trim()
+        if (itm === tabRowHead) {
+            $(this)[0].scrollIntoView(true)
+            $(this).addClass("hilihead")
+            return
+        }
+    })
+}
 function playedItm_scroll2view() {
     var bcv = $(this).text()
     var audinfo = new get_audio_info(bcv)
 
     $(".hilihead").removeClass("hilihead")
     $(this).parentsUntil("#playedBoard").find(".playedItm").addClass("hilihead")
-    $("#myAudioFileNameSelect td").each(function () {
-        var itm = $(this).text().trim()
-        if (itm === audinfo.BkChp) {
-            $(this)[0].scrollIntoView(true)
-            $(this).addClass("hilihead")
-            return
-        }
-    })
+
+    search_table_item_scroll2view(audinfo.BkChp)
     $("body")[0].scrollIntoView(true)
     init_ui_audio(audinfo)
 }

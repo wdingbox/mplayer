@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <base target="_blank" />
-  <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
-  <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+<base target="_blank" />
+<META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+<META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
 
 <head>
   <title>AudioBible</title>
@@ -40,7 +40,8 @@
       overflow-y: scroll;
       display: block;
     }
-    #dbg{
+
+    #dbg {
       height: 100px;
       background-color: honeydew;
 
@@ -71,7 +72,7 @@
       border-width: 1px;
     }
 
-    .readyplay{
+    .readyplay {
       background-color: greenyellow;
     }
   </style>
@@ -103,7 +104,14 @@
       })
 
 
-    
+
+      /////
+      $("#search_BkChp").on("keyup", function (evt) {
+        var val = $(this).val()
+        if (13 === evt.keyCode) {
+          search_table_item_scroll2view(val)
+        }
+      })
 
 
 
@@ -182,6 +190,7 @@
 
 
   <button id="Bk_Chp_gen">GenBibleTable</button>
+  <input id="search_BkChp"></input>
   <table id="myAudioFileNameSelect" border='1'>
     <option></option>
     <thead>
