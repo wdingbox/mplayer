@@ -19,8 +19,8 @@
 
 
   <script src="../jq/mPlayer.js"></script>
-  <script src="bible_verse_player.js?v=1"></script>
-
+  <script src="./bible_verse_player.js?v=1"></script>
+  <script src="./bible_verse_poffsets.js"></script>
 
   <style>
     body {}
@@ -141,6 +141,7 @@
   <button id="speedup" onclick="speedup(0.25);">+</button>
   <button id="speeddn" onclick="speedup(-0.25);">-</button>
   <a>x </a><a id="speed">1.0</a>
+  
   <button id="start_loop">loop</button>
   <button id="stop_loop">stop</button>
   <a id="show_stop_time"></a>
@@ -207,6 +208,8 @@
     })
   </script>
   </input>
+
+  <button id="store_offs" title="store offsets">store_offsets</button>
 
 
   <table id="myAudioFileNameSelect" border='1'>

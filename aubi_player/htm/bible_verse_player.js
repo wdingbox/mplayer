@@ -36,6 +36,7 @@ function append_playedItm(bcv, txt) {
 }
 function get_audio_info(bcv) {
     //console.log("bcv=", bcv)
+    this.bcv = bcv
     bcv = bcv.replace(/\s/g, "")
     var mat = bcv.match("([0-9a-zA-Z]{3})([0-9]+)[\:]([0-9]+)")
     if (!mat) {
@@ -52,6 +53,9 @@ function get_audio_info(bcv) {
     this.relativePos = BibleObj[Bk][Chp][Vrs][0]
     this.relativeLen = BibleObj[Bk][Chp][Vrs][1]
     this.txt = NIV[Bk][Chp][Vrs]
+}
+get_audio_info.prototype.save_offsets=function(){
+    
 }
 function play_url_param_bcv(bcv) {
     var audinfo = new get_audio_info(bcv)
@@ -113,6 +117,7 @@ function init_ui_audio(audinfo) {
         gvObj = document.getElementById('myAudio');
     }
     $("#filename").val(audinfo.audsrc)
+    gvObj.m_audinfo = audinfo;
 
     gvObj.src = audinfo.audsrc
     gvObj.muted = true;
@@ -201,4 +206,8 @@ function loop_start() {
     gvObj.muted = false;
     gvObj.currentTime = start_time
     gvObj.m_loop_bPaused = false
+}
+
+function store_offsets_data(){
+
 }
