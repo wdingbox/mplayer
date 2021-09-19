@@ -110,32 +110,39 @@ function init_ui_audio(audinfo) {
     gvObj.src = audinfo.audsrc
     gvObj.muted = true;
     var stop_time = -1, start_time = -1
-    gvObj.onplay = function () {
-        $("#dbg").append('<br>Video onplay.');
+    gvObj.oncanplaythrough = function () {
         var maxlen = gvObj.duration;//(audio len in seconds)
+        $("#dbg").append(`<br>oncanplaythrough maxlen=${maxlen}`);
+    }
+    gvObj.onplay = function () {
+        var maxlen = gvObj.duration;//(audio len in seconds)
+        $("#dbg").append(`onplay maxlen=${maxlen}`);
         if (!maxlen) {
             alert(maxlen + "duration failed:" + audinfo.audsrc)
             return;
         }
-        //console.log("maxlen", maxlen)
+    
         var startime = parseFloat(maxlen) * parseFloat(audinfo.relativePos)
         var duratime = parseFloat(maxlen) * parseFloat(audinfo.relativeLen)
-        var offsetime = parseFloat($("#offset_star").val())
+        var offsettime = parseFloat($("#offset_star").val())
+        var offsetspan = parseFloat($("#offset_span").val())
 
-        start_time = startime + offsetime
-        stop_time = start_time + duratime
+        $("#start_float").val(startime.toFixed(4))
+        $("#durat_float").val(duratime.toFixed(4))
+
+        start_time = startime + offsettime
+        stop_time = start_time + duratime + offsetspan
 
         gvObj.currentTime = start_time
         gvObj.muted = false;
         //gvObj.play()
-        $("#start_float").val(startime.toFixed(4))
-        $("#durat_float").val(duratime.toFixed(4))
     }
 
     gvObj.onended = (event) => {
         $("#dbg").append('<br>Video stopped either because 1) it was over, ' +
             'or 2) no further data is available.');
         setTimeout(function () {
+            if(gvObj.m_bPaused === true) return
             if (start_time > 0) {
                 gvObj.currentTime = start_time
                 gvObj.play()
@@ -144,16 +151,28 @@ function init_ui_audio(audinfo) {
     };
     gvObj.onemptied = (event) => {
         $("#dbg").append('<br>Uh oh. The media is empty. Did you call load()?');
+        var maxlen = gvObj.duration;//(audio len in seconds)
+        $("#dbg").append(`onplay maxlen=${maxlen}`);
+    };
+    gvObj.onpause = (event) => {
+        var maxlen = gvObj.duration;//(audio len in seconds)
+        $("#dbg").append(`<br>onpaused maxlen=${maxlen}`);
+        gvObj.m_loop_bPaused = true
+
+        var txt = "" + gvObj.currentTime
+        txt += " = " + Util.convert_seconds_to_hhmmss(txt)
+        $("#show_stop_time").text(txt)
     };
     gvObj.ontimeupdate = function () {
         if (-1 === stop_time) return
         if (gvObj.currentTime >= stop_time) {
             gvObj.pause()
+            if(gvObj.m_loop_bPaused === true) return
 
             ////// loop after 3s. 
             setTimeout(function () {
                 if (start_time > 0) {
-                    gvObj.currentTime = start_time
+                    //gvObj.currentTime = start_time
                     gvObj.play()
                 }
             }, 3000)
@@ -174,4 +193,5 @@ function loop_start() {
     gvObj.src = $("#filename").val()
     gvObj.muted = false;
     gvObj.currentTime = start_time
+    gvObj.m_loop_bPaused = false
 }

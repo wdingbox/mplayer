@@ -86,9 +86,6 @@
       })
 
       $("#stop_loop").on("click", function () {
-        var txt = "" + gvObj.currentTime
-        txt += " = " + Util.convert_seconds_to_hhmmss(txt)
-        $("#show_stop_time").text(txt)
         gvObj.pause()
       })
 
