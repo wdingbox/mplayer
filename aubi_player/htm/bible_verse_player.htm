@@ -188,9 +188,27 @@
 
   <hr />
 
-
   <button id="Bk_Chp_gen">GenBibleTable</button>
-  <input id="search_BkChp"></input>
+  <input id="search_BkChp" placeholder="Psm121" list="PulldownItems">
+  <datalist id="PulldownItems">
+    <option value="Gen1">
+    <option value="Firefox">
+    <option value="Chrome">
+    <option value="Opera">
+    <option value="Safari">
+  </datalist>
+  <script>
+    $(function () {
+      var slst = ""
+      Object.keys(BkID_to_AudioName).forEach(function (key) {
+        slst += `<option value='${key}'>`
+      })
+      $("#PulldownItems").html(slst)
+    })
+  </script>
+  </input>
+
+
   <table id="myAudioFileNameSelect" border='1'>
     <option></option>
     <thead>
