@@ -135,36 +135,27 @@
         <div class="sright">start</div>
       </td>
       <td>
-        <button class="plusnum">+</button>
-        <button class="minusnum">-</button>
         <input id="start_float" onclick="$('#start_hhmmss').val(Util.convert_seconds_to_hhmmss($(this).val()));"
-          value="0.0" title="in seconds"></input>=<input id="start_hhmmss"
-          onclick="$('#start_float').val(Util.convert_hhmmss_to_seconds($(this).val()));" value="00:00:00.00"
-          title="hh:mm:ss."></input>
+          value="0.0" title="in seconds"></input>
+      </td>
+      <td>
+        <button class="plusnum">+</button>
+        <button class="minusnum">-</button>
+        <input id="offset_star" value="2"></input>
       </td>
     </tr>
 
     <tr>
       <td>
-        <div class="sright">offset</div>
+        <div class="sright">span</div>
       </td>
       <td>
-        <button class="plusnum">+</button>
-        <button class="minusnum">-</button>
-        <input id="offset_float" value="2"></input>
-      </td>
-
-    </tr>
-
-    <tr>
-      <td>
-        <div class="sright">duration</div>
-      </td>
-      <td>
-        <button class="plusnum">+</button>
-        <button class="minusnum">-</button>
-
         <input id="durat_float" value="0"></input>
+      </td>
+      <td>
+        <button class="plusnum">+</button>
+        <button class="minusnum">-</button>
+        <input id="offset_span" value="0"></input>
       </td>
     </tr>
 

@@ -119,7 +119,7 @@ function init_ui_audio(audinfo) {
         //console.log("maxlen", maxlen)
         var startime = parseFloat(maxlen) * parseFloat(audinfo.relativePos)
         var duratime = parseFloat(maxlen) * parseFloat(audinfo.relativeLen)
-        var offsetime = parseFloat($("#offset_float").val())
+        var offsetime = parseFloat($("#offset_star").val())
 
         start_time = startime + offsetime
         stop_time = start_time + duratime
@@ -160,7 +160,7 @@ function init_ui_audio(audinfo) {
     }
 }
 function loop_start() {
-    var offsetime = parseFloat($("#offset_float").val())
+    var offsetime = parseFloat($("#offset_star").val())
     var startTime = $("#start_float").val()
     if ("0.0" === startTime) {
         alert("not init yet.")
