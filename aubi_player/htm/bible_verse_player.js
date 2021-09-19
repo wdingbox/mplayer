@@ -1,4 +1,4 @@
-
+var gvObj = null
 
 $(function () {
     //console.log(NIV)
@@ -31,10 +31,10 @@ function append_playedItm(bcv, txt) {
         $("#playedBoard").append(dis)
     }
 
-        $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).addClass("hili")
-    
+    $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).addClass("hili")
+
 }
-function get_audio_info(bcv) {
+function get_audio_meta(bcv) {
     //console.log("bcv=", bcv)
     this.bcv = bcv
     bcv = bcv.replace(/\s/g, "")
@@ -53,14 +53,20 @@ function get_audio_info(bcv) {
     this.relativePos = BibleObj[Bk][Chp][Vrs][0]
     this.relativeLen = BibleObj[Bk][Chp][Vrs][1]
     this.txt = NIV[Bk][Chp][Vrs]
+
+    if ("array" === typeof (bible_verse_playoffsets[Bk][Chp][Vrs])) {
+        this.offset_Star = bible_verse_playoffsets[Bk][Chp][Vrs][0]
+        this.offset_Span = bible_verse_playoffsets[Bk][Chp][Vrs][1]
+    }
 }
-get_audio_info.prototype.save_offsets=function(){
-    
+get_audio_meta.prototype.save_offsets = function () {
+
 }
+
 function play_url_param_bcv(bcv) {
-    var audinfo = new get_audio_info(bcv)
+    var audinfo = new get_audio_meta(bcv)
     append_playedItm(bcv, audinfo.txt)
-    init_ui_audio(audinfo)
+    create_audio_uictr(audinfo)
 }
 function gen_bible_table() {
 
@@ -81,16 +87,16 @@ function gen_bible_table() {
     }
     $("#myAudioFileNameSelect tbody").append(trs).find(".vrsItm").on("click", function () {
         var bcv = $(this).attr("bcv")
-        var audinfo = new get_audio_info(bcv)
+        var audinfo = new get_audio_meta(bcv)
 
         $(".hili").removeClass("hili")
         $(this).addClass("hili")
 
         append_playedItm(bcv, audinfo.txt)
-        init_ui_audio(audinfo)
+        create_audio_uictr(audinfo)
     });
 }
-function search_table_item_scroll2view(tabRowHead){
+function search_table_item_scroll2view(tabRowHead) {
     $("#myAudioFileNameSelect td").each(function () {
         var itm = $(this).text().trim()
         if (itm === tabRowHead) {
@@ -102,17 +108,17 @@ function search_table_item_scroll2view(tabRowHead){
 }
 function playedItm_scroll2view() {
     var bcv = $(this).text()
-    var audinfo = new get_audio_info(bcv)
+    var audinfo = new get_audio_meta(bcv)
 
     $(".hilihead").removeClass("hilihead")
     $(this).parentsUntil("#playedBoard").find(".playedItm").addClass("hilihead")
 
     search_table_item_scroll2view(audinfo.BkChp)
     //$("body")[0].scrollIntoView(true)
-    init_ui_audio(audinfo)
+    create_audio_uictr(audinfo)
 }
 
-function init_ui_audio(audinfo) {
+function create_audio_uictr(audinfo) {
     if (!gvObj) {
         gvObj = document.getElementById('myAudio');
     }
@@ -208,6 +214,6 @@ function loop_start() {
     gvObj.m_loop_bPaused = false
 }
 
-function store_offsets_data(){
+function store_offsets_data() {
 
 }
