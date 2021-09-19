@@ -130,6 +130,10 @@ function init_ui_audio(audinfo) {
         $("#start_float").val(startime.toFixed(4))
         $("#durat_float").val(duratime.toFixed(4))
 
+        
+        $("#start_float").addClass("readyplay")
+        $("#durat_float").addClass("readyplay")
+
         start_time = startime + offsettime
         stop_time = start_time + duratime + offsetspan
 

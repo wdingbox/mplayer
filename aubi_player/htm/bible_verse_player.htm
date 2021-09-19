@@ -63,6 +63,10 @@
       border-color: black;
       border-width: 1px;
     }
+
+    .readyplay{
+      background-color: greenyellow;
+    }
   </style>
   <script language="javascript">
 
@@ -88,7 +92,7 @@
       $("#stop_loop").on("click", function () {
         gvObj.pause()
         gvObj.m_loop_bPaused = true
-
+        $(".readyplay").removeClass("readyplay")
       })
 
 
