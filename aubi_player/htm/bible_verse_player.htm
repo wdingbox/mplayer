@@ -75,6 +75,9 @@
     .readyplay {
       background-color: greenyellow;
     }
+    #show_stop_time{
+      display: inline-block;
+    }
   </style>
   <script language="javascript">
 
@@ -216,8 +219,7 @@
   </script>
   </input>
 
-  <button id="store_offsets" title="store offsets">store_offsets</button>
-
+ 
 
   <table id="myAudioFileNameSelect" border='1'>
     <option></option>
@@ -229,7 +231,8 @@
     <tbody></tbody>
   </table><br>
   <div id="dbg">dbg</div>
-  <textarea id="txa" size=1000></textarea>
+  <button id="store_offsets" title="store offsets">show_offsets</button><br>
+  <textarea id="txa" cols="100"></textarea>
 
 
 </body>

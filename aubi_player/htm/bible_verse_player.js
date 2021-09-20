@@ -213,7 +213,7 @@ function create_audio_uictr(audinfo) {
 
         var txt = "" + gvObj.currentTime
         txt += " = " + TimeFormatConverter.convert_seconds_to_hhmmss(txt)
-        $("#show_stop_time").text(txt)
+        $("#show_stop_time").text(gvObj.m_audinfo.bcv + "@" + txt)
     };
     gvObj.ontimeupdate = function () {
         if (-1 === stop_time) return
