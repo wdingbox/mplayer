@@ -20,7 +20,7 @@ var localStorage_playOffsets = {
         if (str) {
             VrsAudioOffsets_NIV = JSON.parse(str)
         }
-        if(!VrsAudioOffsets_NIV){
+        if (!VrsAudioOffsets_NIV) {
             alert("error load local storage")
         }
         //var vrs2 = VrsAudioOffsets_NIV["Gen"]["1"]["1"]
@@ -185,10 +185,13 @@ function search_table_item_scroll2view(BkChp) {
     if (idx >= 0) {
         BkChp = BkChp.substr(0, idx)
     }
+    if (BkChp.length === 3) BkChp += "1"
     $(".hiliscrollview").removeClass("hiliscrollview")
     $("#myAudioFileNameSelect td").each(function () {
         var itm = $(this).text().trim()
         if (itm === BkChp) {
+            $("#myAudioFileNameSelect").find("td:contains('Rev22')")[0].scrollIntoView()
+            
             $(this)[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' }) //relative scrollintoview.
             $(this).addClass("hiliscrollview")
             return
