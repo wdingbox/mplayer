@@ -45,6 +45,7 @@ var localStorage_playOffsets = {
 
 
 $(function () {
+    $("#DeletePlayingItem").hide()
     localStorage_playOffsets.load_offsets()
     localStorage_playOffsets.load_playedList()
     //console.log(NIV)
@@ -115,8 +116,11 @@ get_audio_meta.prototype.offsetary = function (ar) {
 
 
 
-function RemovePlayingItemFromPlayedBoard(cv) {
-    $("#playedBoard").find(".playingvrs").parent().empty()
+function RemovePlayingItemFromPlayedBoard() {
+    $("#playedBoard").find(".playingvrs").parent().hide("slide").empty()
+
+    $("#DeletePlayingItem").hide("slide");
+    //$("#search_BkChp").val("")
 }
 function appendToPlayBoard(bcv) {
     var audinfo = new get_audio_meta(bcv)
@@ -184,10 +188,16 @@ function onclk_playedItm() {
     $("#playedBoard").find(".playingvrs").removeClass("playingvrs")
     $(this).addClass("playingvrs")
 
+    $("#DeletePlayingItem").show("slide");
+    $("#search_BkChp").val(bcv)
 
     search_table_item_scroll2view(audinfo.BkChp)
     //$("body")[0].scrollIntoView(true)
     create_audio_uictr(audinfo)
+
+    
+    
+    
 }
 
 function create_audio_uictr(audinfo) {
@@ -224,20 +234,20 @@ function create_audio_uictr(audinfo) {
             offsetspan = offary[1]
             $("#offset_star").val(offsettime)
             $("#offset_span").val(offsetspan)
-            $("#offset_star").addClass("readyplay")
-            $("#offset_span").addClass("readyplay")
+            $("#offset_star").addClass("hili_offsets")
+            $("#offset_span").addClass("hili_offsets")
         } else {
             audinfo.offsetary([offsettime, offsetspan])
-            $("#offset_star").removeClass("readyplay")
-            $("#offset_span").removeClass("readyplay")
+            $("#offset_star").removeClass("hili_offsets")
+            $("#offset_span").removeClass("hili_offsets")
         }
 
         $("#start_float").val(startime.toFixed(4))
         $("#durat_float").val(duratime.toFixed(4))
 
 
-        $("#start_float").addClass("readyplay")
-        $("#durat_float").addClass("readyplay")
+        $("#start_float").addClass("hili_offsets")
+        $("#durat_float").addClass("hili_offsets")
 
         start_time = startime + offsettime
         stop_time = start_time + duratime + offsetspan

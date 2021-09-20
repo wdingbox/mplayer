@@ -60,8 +60,15 @@
     }
 
     .playedItm {
-      font-size: large;
+      border: solid blue;
+      border-width: 1px;
+
+      padding-left: 10px;
+      padding-right: 10px;
+
+      font-size: small;
       font-weight: bold;
+      color:blue;
     }
     .hiliscrollview {
       border-width: 5px;
@@ -70,10 +77,10 @@
     .hili {
       background-color: red;
     }
-    .readyplay {
+    .hili_offsets{
       background-color: greenyellow;
     }
-    .playingvrs {
+    .playingvrs, #DeletePlayingItem {
       background-color:lightgreen;
     }
 
@@ -108,7 +115,7 @@
       $("#stop_loop").on("click", function () {
         gvObj.pause()
         gvObj.m_loop_bPaused = true
-        $(".readyplay").removeClass("readyplay")
+        $(".hili_offsets").removeClass("hili_offsets")
       })
 
 
@@ -198,6 +205,8 @@
   <hr />
 
   <button id="Bk_Chp_gen">GenBibleTable</button>
+  <button id="DeletePlayingItem" onclick="RemovePlayingItemFromPlayedBoard()">Remove</button>
+ 
   <input id="search_BkChp" placeholder="Psm121" list="PulldownItems">
   <datalist id="PulldownItems">
     <option value="Gen1">
@@ -221,8 +230,7 @@
     })
   </script>
   </input>
-  <button id="DeletePlayingItem" onclick="RemovePlayingItemFromPlayedBoard()">RemovePlayingItem</button>
-  <button id="store_offsets" title="store offsets">localSave</button>
+   <button id="store_offsets" title="store offsets">localSave</button>
 
  
 
