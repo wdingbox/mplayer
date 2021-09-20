@@ -115,7 +115,9 @@ get_audio_meta.prototype.offsetary = function (ar) {
 
 
 
-
+function RemovePlayingItemFromPlayedBoard(cv) {
+    $("#playedBoard").find(".playingvrs").parent().empty()
+}
 function appendToPlayBoard(bcv) {
     var audinfo = new get_audio_meta(bcv)
     var nExist = $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).length
