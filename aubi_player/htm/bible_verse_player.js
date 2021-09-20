@@ -195,7 +195,9 @@ function search_table_item_scroll2view(BkChp) {
             
             $(this)[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' }) //relative scrollintoview.
             
-            $("body")[0].scrollIntoView()
+            setTimeout(function(){
+                $("body")[0].scrollIntoView()
+            },1000)
             
             $(this).addClass("hiliscrollview")
             return
