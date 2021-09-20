@@ -85,7 +85,7 @@ get_audio_meta.prototype.offsetary = function (ar) {
         }
     }
 }
-get_audio_meta.prototype.offsets_export = function () {
+get_audio_meta.prototype.offsets_store = function () {
     var str = JSON.stringify(bible_verse_playoffsets, null, 4)
     $("#txa").val(str)
     localStorage_save_offsets()
