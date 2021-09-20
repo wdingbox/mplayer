@@ -194,6 +194,9 @@ function search_table_item_scroll2view(BkChp) {
             $("#myAudioFileNameSelect").find("td:contains('Rev22')")[0].scrollIntoView()
             
             $(this)[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' }) //relative scrollintoview.
+            
+            $("body")[0].scrollIntoView()
+            
             $(this).addClass("hiliscrollview")
             return
         }
