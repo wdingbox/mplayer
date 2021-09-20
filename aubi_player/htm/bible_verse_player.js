@@ -6,6 +6,10 @@ var test = typeof (bible_verse_playoffsets)
 
 
 var localStorage_playOffsets = {
+    save_all:function(){
+        this.save_offsets()
+        this.save_playedList()
+    },
     load_offsets: function () {
         var vrs1 = bible_verse_playoffsets["Gen"]["1"]["1"]
         var str = localStorage.getItem("bible_verse_playoffsets")
@@ -20,13 +24,11 @@ var localStorage_playOffsets = {
 
         var str = JSON.stringify(bible_verse_playoffsets, null, 4)
         $("#txa").val(str)
-
-        this.save_playedList()
     },
 
     save_playedList:function(){
         var ary = []
-        $("#playedBoard").find(`.playedItm`).each(function(){
+        $("#playedBoard").find(`.playedbcv`).each(function(){
             var bcv = $(this).text()
             ary.push(bcv)
         })
@@ -126,16 +128,16 @@ function RemovePlayingItemFromPlayedBoard() {
 }
 function appendToPlayBoard(bcv) {
     var audinfo = new get_audio_meta(bcv)
-    var nExist = $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).length
+    var nExist = $("#playedBoard").find(`.playedbcv[bcv='${bcv}']`).length
     if (!nExist) {
-        var dis = $(`<div><a class='playedItm' bcv='${bcv}'>${bcv}</a><a>${audinfo.txt}</a></div>`);
-        $(dis).find(".playedItm").on("click", onclk_playedItm)
+        var dis = $(`<div class='playedItem'><a class='playedbcv' bcv='${bcv}'>${bcv}</a><a>${audinfo.txt}</a></div>`);
+        $(dis).find(".playedbcv").on("click", onclk_playedItm)
 
         $("#playedBoard").append(dis)
     }
 
     $("#playedBoard").find(".playingvrs").removeClass("playingvrs")
-    $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).addClass("playingvrs")
+    $("#playedBoard").find(`.playedbcv[bcv='${bcv}']`).addClass("playingvrs")
 
 }
 function play_url_param_bcv(bcv) {
