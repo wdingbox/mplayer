@@ -128,7 +128,7 @@ function appendToPlayBoard(bcv) {
     var audinfo = new get_audio_meta(bcv)
     var nExist = $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).length
     if (!nExist) {
-        var dis = $(`<div><a class='playedItm' bcv='${bcv}'>${bcv}</a><br><a>${audinfo.txt}</a></div>`);
+        var dis = $(`<div><a class='playedItm' bcv='${bcv}'>${bcv}</a><a>${audinfo.txt}</a></div>`);
         $(dis).find(".playedItm").on("click", onclk_playedItm)
 
         $("#playedBoard").append(dis)
