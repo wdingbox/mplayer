@@ -23,20 +23,7 @@ $(function () {
 
 });////////////////////////////////
 
-function append_playedItm(bcv, txt) {
-    var nExist = $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).length
-    if (!nExist) {
-        var dis = $(`<div><a class='playedItm' bcv='${bcv}'>${bcv}</a><br><a>${txt}</a></div>`);
-        $(dis).find(".playedItm").on("click", onclk_playedItm)
-        $("#playedBoard").append(dis)
-    }
 
-    //$("#playedBoard").find(`.playedItm[bcv='${bcv}']`).addClass("playingvrs")
-    $("#playedBoard").find(".playingvrs").removeClass("playingvrs")
-
-    $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).addClass("playingvrs")
-
-}
 function get_audio_meta(bcv) {
     //console.log("bcv=", bcv)
     this.bcv = bcv
@@ -61,10 +48,6 @@ function get_audio_meta(bcv) {
     this.relativeLen = BibleObj[Bok][Chp][Vrs][1]
     this.txt = NIV[Bok][Chp][Vrs]
 
-    if ("array" === typeof (bible_verse_playoffsets[Bok][Chp][Vrs])) {
-        this.offset_Star = bible_verse_playoffsets[Bok][Chp][Vrs][0]
-        this.offset_Span = bible_verse_playoffsets[Bok][Chp][Vrs][1]
-    }
 }
 get_audio_meta.prototype.offsetary = function (ar) {
     var Bok = this.Bok
@@ -83,6 +66,21 @@ get_audio_meta.prototype.offsetary = function (ar) {
 get_audio_meta.prototype.offsets_show = function () {
     var str = JSON.stringify(bible_verse_playoffsets, null, 4)
     $("#txa").val(str)
+}
+
+function append_playedItm(bcv, txt) {
+    var nExist = $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).length
+    if (!nExist) {
+        var dis = $(`<div><a class='playedItm' bcv='${bcv}'>${bcv}</a><br><a>${txt}</a></div>`);
+        $(dis).find(".playedItm").on("click", onclk_playedItm)
+        $("#playedBoard").append(dis)
+    }
+
+    //$("#playedBoard").find(`.playedItm[bcv='${bcv}']`).addClass("playingvrs")
+    $("#playedBoard").find(".playingvrs").removeClass("playingvrs")
+
+    $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).addClass("playingvrs")
+
 }
 function play_url_param_bcv(bcv) {
     var audinfo = new get_audio_meta(bcv)
