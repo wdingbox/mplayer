@@ -75,7 +75,7 @@ $(function () {
 });////////////////////////////////
 
 
-function get_audio_meta(bcv) {
+function Audio_Info(bcv) {
     //console.log("bcv=", bcv)
     this.bcv = bcv
     bcv = bcv.replace(/\s/g, "")
@@ -100,7 +100,7 @@ function get_audio_meta(bcv) {
     this.txt = NIV[Bok][Chp][Vrs]
 
 }
-get_audio_meta.prototype.offsetary = function (ar) {
+Audio_Info.prototype.offsetary = function (ar) {
     var Bok = this.Bok
     var Chp = this.Chp
     var Vrs = this.Vrs
@@ -127,7 +127,7 @@ function RemovePlayingItemFromPlayedBoard() {
     //$("#search_BkChp").val("")
 }
 function appendToPlayBoard(bcv) {
-    var audinfo = new get_audio_meta(bcv)
+    var audinfo = new Audio_Info(bcv)
     var nExist = $("#playedBoard").find(`.playedbcv[bcv='${bcv}']`).length
     if (!nExist) {
         var dis = $(`<tr class='playedItem'><td class='playedbcv' bcv='${bcv}'>${bcv}</td><td>${audinfo.txt}</td></tr>`);
@@ -138,12 +138,11 @@ function appendToPlayBoard(bcv) {
 
     $("#playedBoard").find(".playingvrs").removeClass("playingvrs")
     $("#playedBoard").find(`.playedbcv[bcv='${bcv}']`).addClass("playingvrs")
-
 }
 function play_url_param_bcv(bcv) {
-    var audinfo = new get_audio_meta(bcv)
+    var audinfo = new Audio_Info(bcv)
     appendToPlayBoard(bcv, audinfo.txt)
-    create_audio_uictr(audinfo)
+    Reset_Audio_Ctrl(audinfo)
 }
 function gen_bible_table() {
 
@@ -164,13 +163,13 @@ function gen_bible_table() {
     }
     $("#myAudioFileNameSelect tbody").append(trs).find(".vrsItm").on("click", function () {
         var bcv = $(this).attr("bcv")
-        var audinfo = new get_audio_meta(bcv)
+        var audinfo = new Audio_Info(bcv)
 
 
         $(this).toggleClass("hili")
 
         appendToPlayBoard(bcv, audinfo.txt)
-        create_audio_uictr(audinfo)
+        Reset_Audio_Ctrl(audinfo)
     });
 }
 function search_table_item_scroll2view(tabRowHead) {
@@ -186,7 +185,7 @@ function search_table_item_scroll2view(tabRowHead) {
 }
 function onclk_playedItm() {
     var bcv = $(this).text()
-    var audinfo = new get_audio_meta(bcv)
+    var audinfo = new Audio_Info(bcv)
 
 
     $("#playedBoard").find(".playingvrs").removeClass("playingvrs")
@@ -197,14 +196,14 @@ function onclk_playedItm() {
 
     search_table_item_scroll2view(audinfo.BkChp)
     //$("body")[0].scrollIntoView(true)
-    create_audio_uictr(audinfo)
+    Reset_Audio_Ctrl(audinfo)
 
     
     
     
 }
 
-function create_audio_uictr(audinfo) {
+function Reset_Audio_Ctrl(audinfo) {
     if (!gvObj) {
         gvObj = document.getElementById('myAudio');
     }
