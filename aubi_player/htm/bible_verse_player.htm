@@ -121,9 +121,7 @@
       })
 
       $("#stop_loop").on("click", function () {
-        gvObj.pause()
-        gvObj.m_loop_bPaused = true
-        $(".hili_offsets").removeClass("hili_offsets")
+        loop_stop()
       })
 
 
@@ -178,7 +176,7 @@
         <div class="sright">start</div>
       </td>
       <td>
-        <input id="start_float" onclick="$('#start_hhmmss').val(Util.convert_seconds_to_hhmmss($(this).val()));"
+        <input id="start_float" onclick="$('#show_stop_time').text(TimeFormatConverter.convert_seconds_to_hhmmss($(this).val()));"
           value="0.0" title="in seconds"></input>
       </td>
       <td>
@@ -193,7 +191,8 @@
         <div class="sright">span</div>
       </td>
       <td>
-        <input id="durat_float" value="0"></input>
+        <input id="durat_float" value="0" onclick="$('#show_stop_time').text(TimeFormatConverter.convert_seconds_to_hhmmss($(this).val()));"
+        ></input>
       </td>
       <td>
         <button class="plusnum">+</button>

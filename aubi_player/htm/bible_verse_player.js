@@ -6,7 +6,7 @@ var test = typeof (VrsAudioOffsets_NIV)
 
 
 var localStorage_playOffsets = {
-    save_all:function(){
+    save_all: function () {
         this.save_offsets()
         this.save_playedList()
     },
@@ -23,26 +23,26 @@ var localStorage_playOffsets = {
         localStorage.setItem("VrsAudioOffsets_NIV", str)
 
         var str = JSON.stringify(VrsAudioOffsets_NIV, null, 4)
-        $("#txa").val(str)
+        $("#txa").val("var VrsAudioOffsets_NIV=" + str)
     },
 
-    save_playedList:function(){
+    save_playedList: function () {
         var ary = []
-        $("#playedBoard").find(`.playedbcv`).each(function(){
+        $("#playedBoard").find(`.playedbcv`).each(function () {
             var bcv = $(this).text()
             ary.push(bcv)
         })
         localStorage.setItem("playedList", ary)
     },
-    load_playedList:function(){
+    load_playedList: function () {
         var ary = localStorage.getItem("playedList")
-        if(!ary) return
-        ary.split(",").sort(function(a, b) {
+        if (!ary) return
+        ary.split(",").sort(function (a, b) {
             return a.localeCompare(b); //natural-sort
-          }).forEach(function(bcv){
+        }).forEach(function (bcv) {
             appendToPlayBoard(bcv)
         })
-        
+
     }
 }
 
@@ -125,6 +125,7 @@ function RemovePlayingItemFromPlayedBoard() {
 
     $("#DeletePlayingItem").hide("slide");
     //$("#search_BkChp").val("")
+    loop_stop()
 }
 function appendToPlayBoard(bcv) {
     var audinfo = new Audio_Info(bcv)
@@ -172,11 +173,15 @@ function gen_bible_table() {
         Reset_Audio_Ctrl(audinfo)
     });
 }
-function search_table_item_scroll2view(tabRowHead) {
+function search_table_item_scroll2view(BkChp) {
+    var idx = BkChp.indexOf(":")
+    if (idx >= 0) {
+        BkChp = BkChp.substr(0, idx)
+    }
     $(".hiliscrollview").removeClass("hiliscrollview")
     $("#myAudioFileNameSelect td").each(function () {
         var itm = $(this).text().trim()
-        if (itm === tabRowHead) {
+        if (itm === BkChp) {
             $(this)[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' }) //relative scrollintoview.
             $(this).addClass("hiliscrollview")
             return
@@ -198,9 +203,9 @@ function onclk_playedItm() {
     //$("body")[0].scrollIntoView(true)
     Reset_Audio_Ctrl(audinfo)
 
-    
-    
-    
+
+
+
 }
 
 function Reset_Audio_Ctrl(audinfo) {
@@ -313,7 +318,11 @@ function loop_start() {
     gvObj.currentTime = start_time
     gvObj.m_loop_bPaused = false
 }
-
+function loop_stop() {
+    gvObj.pause()
+    gvObj.m_loop_bPaused = true
+    $(".hili_offsets").removeClass("hili_offsets")
+}
 function store_offsets_data() {
 
 }
