@@ -202,10 +202,7 @@ function onclk_playedItm() {
     search_table_item_scroll2view(audinfo.BkChp)
     //$("body")[0].scrollIntoView(true)
     Reset_Audio_Ctrl(audinfo)
-
-
-
-
+    
 }
 
 function Reset_Audio_Ctrl(audinfo) {
