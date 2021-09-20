@@ -1,4 +1,4 @@
-var bible_verse_playoffsets={
+var VrsAudioOffsets_NIV={
   "Gen": {
       "1": {
           "1": "",

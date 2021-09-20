@@ -2,7 +2,7 @@ var gvObj = null
 
 var gOffsetsObj = null
 
-var test = typeof (bible_verse_playoffsets)
+var test = typeof (VrsAudioOffsets_NIV)
 
 
 var localStorage_playOffsets = {
@@ -11,18 +11,18 @@ var localStorage_playOffsets = {
         this.save_playedList()
     },
     load_offsets: function () {
-        var vrs1 = bible_verse_playoffsets["Gen"]["1"]["1"]
-        var str = localStorage.getItem("bible_verse_playoffsets")
+        var vrs1 = VrsAudioOffsets_NIV["Gen"]["1"]["1"]
+        var str = localStorage.getItem("VrsAudioOffsets_NIV")
         if (str) {
-            bible_verse_playoffsets = JSON.parse(str)
+            VrsAudioOffsets_NIV = JSON.parse(str)
         }
-        var vrs2 = bible_verse_playoffsets["Gen"]["1"]["1"]
+        var vrs2 = VrsAudioOffsets_NIV["Gen"]["1"]["1"]
     },
     save_offsets: function () {
-        var str = JSON.stringify(bible_verse_playoffsets)
-        localStorage.setItem("bible_verse_playoffsets", str)
+        var str = JSON.stringify(VrsAudioOffsets_NIV)
+        localStorage.setItem("VrsAudioOffsets_NIV", str)
 
-        var str = JSON.stringify(bible_verse_playoffsets, null, 4)
+        var str = JSON.stringify(VrsAudioOffsets_NIV, null, 4)
         $("#txa").val(str)
     },
 
@@ -105,12 +105,12 @@ get_audio_meta.prototype.offsetary = function (ar) {
     var Chp = this.Chp
     var Vrs = this.Vrs
     if ("object" === typeof (ar) && ar.length > 1) {//set
-        bible_verse_playoffsets[Bok][Chp][Vrs] = ar
+        VrsAudioOffsets_NIV[Bok][Chp][Vrs] = ar
     } else {//get
-        var itme = bible_verse_playoffsets[Bok][Chp][Vrs]
+        var itme = VrsAudioOffsets_NIV[Bok][Chp][Vrs]
         var styp = typeof (itme)
         if ("object" === styp) {
-            return bible_verse_playoffsets[Bok][Chp][Vrs]
+            return VrsAudioOffsets_NIV[Bok][Chp][Vrs]
         } else {
             return null
         }
