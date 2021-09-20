@@ -61,7 +61,7 @@ $(function () {
     localStorage_playOffsets.load_playedList()
     //console.log(NIV)
     $("#Bk_Chp_gen").on("click", function () {
-        $(this).hide()
+        
         gen_bible_table()
     })
 
@@ -153,6 +153,7 @@ function play_url_param_bcv(bcv) {
     Reset_Audio_Ctrl(audinfo)
 }
 function gen_bible_table() {
+    $("#Bk_Chp_gen").hide()
 
     var BibleObj = VrsAudioRelativePosLen_NIV
     var trs = ""
