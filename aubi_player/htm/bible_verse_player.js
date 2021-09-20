@@ -110,7 +110,7 @@ function gen_bible_table() {
         var bcv = $(this).attr("bcv")
         var audinfo = new get_audio_meta(bcv)
 
-        //$(".hili").toggleClass("hili")
+        
         $(this).toggleClass("hili")
 
         append_playedItm(bcv, audinfo.txt)
@@ -118,6 +118,7 @@ function gen_bible_table() {
     });
 }
 function search_table_item_scroll2view(tabRowHead) {
+    $(".hiliscrollview").removeClass("hiliscrollview")
     $("#myAudioFileNameSelect td").each(function () {
         var itm = $(this).text().trim()
         if (itm === tabRowHead) {
@@ -131,9 +132,9 @@ function onclk_playedItm() {
     var bcv = $(this).text()
     var audinfo = new get_audio_meta(bcv)
 
-    $(".hiliscrollview").removeClass("hiliscrollview")
+    
     $("#playedBoard").find(".playingvrs").removeClass("playingvrs")
-    $(this).addClass("hiliscrollview  playingvrs")
+    $(this).addClass("playingvrs")
     
 
     search_table_item_scroll2view(audinfo.BkChp)
