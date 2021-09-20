@@ -27,11 +27,14 @@ function append_playedItm(bcv, txt) {
     var nExist = $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).length
     if (!nExist) {
         var dis = $(`<div><a class='playedItm' bcv='${bcv}'>${bcv}</a><br><a>${txt}</a></div>`);
-        $(dis).find(".playedItm").on("click", playedItm_scroll2view)
+        $(dis).find(".playedItm").on("click", onclk_playedItm)
         $("#playedBoard").append(dis)
     }
 
-    $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).addClass("hili")
+    //$("#playedBoard").find(`.playedItm[bcv='${bcv}']`).addClass("playingvrs")
+    $("#playedBoard").find(".playingvrs").removeClass("playingvrs")
+
+    $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).addClass("playingvrs")
 
 }
 function get_audio_meta(bcv) {
@@ -107,8 +110,8 @@ function gen_bible_table() {
         var bcv = $(this).attr("bcv")
         var audinfo = new get_audio_meta(bcv)
 
-        $(".hili").removeClass("hili")
-        $(this).addClass("hili")
+        //$(".hili").toggleClass("hili")
+        $(this).toggleClass("hili")
 
         append_playedItm(bcv, audinfo.txt)
         create_audio_uictr(audinfo)
@@ -119,17 +122,19 @@ function search_table_item_scroll2view(tabRowHead) {
         var itm = $(this).text().trim()
         if (itm === tabRowHead) {
             $(this)[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' }) //relative scrollintoview.
-            $(this).addClass("hilihead")
+            $(this).addClass("hiliscrollview")
             return
         }
     })
 }
-function playedItm_scroll2view() {
+function onclk_playedItm() {
     var bcv = $(this).text()
     var audinfo = new get_audio_meta(bcv)
 
-    $(".hilihead").removeClass("hilihead")
-    $(this).parentsUntil("#playedBoard").find(".playedItm").addClass("hilihead")
+    $(".hiliscrollview").removeClass("hiliscrollview")
+    $("#playedBoard").find(".playingvrs").removeClass("playingvrs")
+    $(this).addClass("hiliscrollview  playingvrs")
+    
 
     search_table_item_scroll2view(audinfo.BkChp)
     //$("body")[0].scrollIntoView(true)
@@ -213,7 +218,7 @@ function create_audio_uictr(audinfo) {
 
         var txt = "" + gvObj.currentTime
         txt += " = " + TimeFormatConverter.convert_seconds_to_hhmmss(txt)
-        $("#show_stop_time").text(gvObj.m_audinfo.bcv + "@" + txt)
+        $("#show_stop_time").text(gvObj.m_audinfo.bcv + " @ " + txt)
     };
     gvObj.ontimeupdate = function () {
         if (-1 === stop_time) return
