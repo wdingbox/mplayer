@@ -2,25 +2,51 @@ var gvObj = null
 
 var gOffsetsObj = null
 
-var test = typeof(bible_verse_playoffsets)
+var test = typeof (bible_verse_playoffsets)
 
 
-function localStorage_load_offsets(){
-    var vrs1 = bible_verse_playoffsets["Gen"]["1"]["1"]
-    var str = localStorage.getItem("bible_verse_playoffsets")
-    if (str) {
-        bible_verse_playoffsets = JSON.parse(str)
+var localStorage_playOffsets = {
+    load_offsets: function () {
+        var vrs1 = bible_verse_playoffsets["Gen"]["1"]["1"]
+        var str = localStorage.getItem("bible_verse_playoffsets")
+        if (str) {
+            bible_verse_playoffsets = JSON.parse(str)
+        }
+        var vrs2 = bible_verse_playoffsets["Gen"]["1"]["1"]
+    },
+    save_offsets: function () {
+        var str = JSON.stringify(bible_verse_playoffsets)
+        localStorage.setItem("bible_verse_playoffsets", str)
+
+        var str = JSON.stringify(bible_verse_playoffsets, null, 4)
+        $("#txa").val(str)
+
+        this.save_playedList()
+    },
+
+    save_playedList:function(){
+        var ary = []
+        $("#playedBoard").find(`.playedItm`).each(function(){
+            var bcv = $(this).text()
+            ary.push(bcv)
+        })
+        localStorage.setItem("playedList", ary)
+    },
+    load_playedList:function(){
+        var ary = localStorage.getItem("playedList")
+        if(!ary) return
+        ary.split(",").sort().forEach(function(bcv){
+            appendToPlayBoard(bcv)
+        })
+        
     }
-    var vrs2 = bible_verse_playoffsets["Gen"]["1"]["1"]
 }
-function localStorage_save_offsets(){
-    var str = JSON.stringify(bible_verse_playoffsets)
-    localStorage.setItem("bible_verse_playoffsets", str)
-}
+
 
 
 $(function () {
-    localStorage_load_offsets()
+    localStorage_playOffsets.load_offsets()
+    localStorage_playOffsets.load_playedList()
     //console.log(NIV)
     $("#Bk_Chp_gen").on("click", function () {
         $(this).hide()
@@ -77,7 +103,7 @@ get_audio_meta.prototype.offsetary = function (ar) {
         bible_verse_playoffsets[Bok][Chp][Vrs] = ar
     } else {//get
         var itme = bible_verse_playoffsets[Bok][Chp][Vrs]
-        var styp =  typeof (itme)
+        var styp = typeof (itme)
         if ("object" === styp) {
             return bible_verse_playoffsets[Bok][Chp][Vrs]
         } else {
@@ -85,11 +111,7 @@ get_audio_meta.prototype.offsetary = function (ar) {
         }
     }
 }
-get_audio_meta.prototype.offsets_store = function () {
-    var str = JSON.stringify(bible_verse_playoffsets, null, 4)
-    $("#txa").val(str)
-    localStorage_save_offsets()
-}
+
 
 
 
@@ -103,7 +125,7 @@ function appendToPlayBoard(bcv) {
 
         $("#playedBoard").append(dis)
     }
-    
+
     $("#playedBoard").find(".playingvrs").removeClass("playingvrs")
     $("#playedBoard").find(`.playedItm[bcv='${bcv}']`).addClass("playingvrs")
 

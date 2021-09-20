@@ -216,11 +216,13 @@
 
 
       $("#store_offsets").on("click",function(){
-        gvObj.m_audinfo.offsets_store()
+        localStorage_playOffsets.save_offsets()
       })
     })
   </script>
   </input>
+  <button id="delPlayingItem" title="store offsets">DeletePlayingItem</button>
+  <button id="store_offsets" title="store offsets">localSave</button>
 
  
 
@@ -234,7 +236,7 @@
     <tbody></tbody>
   </table><br>
   <div id="dbg">dbg</div>
-  <button id="store_offsets" title="store offsets">playOffsets_Store</button><br>
+  <br>
   <textarea id="txa" cols="100"></textarea>
 
 
