@@ -6,7 +6,11 @@ var test = typeof (VrsAudioOffsets_NIV)
 
 
 var localStorage_playOffsets = {
-    save_all: function () {
+    clear_all: function () {
+        localStorage.setItem("VrsAudioOffsets_NIV", '')
+        localStorage.setItem("playedList", '')
+    },
+    save_all: function (b) {
         this.save_offsets()
         this.save_playedList()
     },
@@ -16,7 +20,10 @@ var localStorage_playOffsets = {
         if (str) {
             VrsAudioOffsets_NIV = JSON.parse(str)
         }
-        var vrs2 = VrsAudioOffsets_NIV["Gen"]["1"]["1"]
+        if(!VrsAudioOffsets_NIV){
+            alert("error load local storage")
+        }
+        //var vrs2 = VrsAudioOffsets_NIV["Gen"]["1"]["1"]
     },
     save_offsets: function () {
         var str = JSON.stringify(VrsAudioOffsets_NIV)
@@ -202,7 +209,7 @@ function onclk_playedItm() {
     search_table_item_scroll2view(audinfo.BkChp)
     //$("body")[0].scrollIntoView(true)
     Reset_Audio_Ctrl(audinfo)
-    
+
 }
 
 function Reset_Audio_Ctrl(audinfo) {

@@ -241,10 +241,18 @@
       $("#store_offsets").on("click",function(){
         localStorage_playOffsets.save_all()
       })
+
+
+      $("#localClear").click(function(){
+        if(confirm("Are you sure to clear data?")){
+          localStorage_playOffsets.clear_all()
+        }
+      })
     })
   </script>
   </input>
    <button id="store_offsets" title="store offsets">localSave</button>
+   <button id="localClear" title="clear all local saved data.">localClear</button>
 
  
 
