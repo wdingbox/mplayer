@@ -35,7 +35,9 @@ var localStorage_playOffsets = {
     load_playedList:function(){
         var ary = localStorage.getItem("playedList")
         if(!ary) return
-        ary.split(",").sort().forEach(function(bcv){
+        ary.split(",").sort(function(a, b) {
+            return a.localeCompare(b); //natural-sort
+          }).forEach(function(bcv){
             appendToPlayBoard(bcv)
         })
         
