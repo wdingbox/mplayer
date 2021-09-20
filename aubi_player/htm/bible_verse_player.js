@@ -77,9 +77,9 @@ get_audio_meta.prototype.offsetary = function (ar) {
         }
     }
 }
-get_audio_meta.prototype.offsets_export = function () {
-    var str = JSON.stringify(bible_verse_playoffsets,4)
-    $("#dbg").html(str)
+get_audio_meta.prototype.offsets_show = function () {
+    var str = JSON.stringify(bible_verse_playoffsets, null, 4)
+    $("#txa").val(str)
 }
 function play_url_param_bcv(bcv) {
     var audinfo = new get_audio_meta(bcv)
@@ -152,7 +152,7 @@ function create_audio_uictr(audinfo) {
     }
     gvObj.onplay = function () {
         var maxlen = gvObj.duration;//(audio len in seconds)
-        $("#dbg").append(`onplay maxlen=${maxlen}`);
+        $("#dbg").append(`<br>onplay maxlen=${maxlen}`);
         if (!maxlen) {
             alert(maxlen + "duration failed:" + audinfo.audsrc)
             return;
@@ -194,21 +194,21 @@ function create_audio_uictr(audinfo) {
     }
 
     gvObj.onended = (event) => {
-        $("#dbg").append('<br>Video stopped either because 1) it was over, ' + 'or 2) no further data is available.');
+        $("#dbg").append('<br>Video stopped either because 1) it was over, or 2) no further data is available.');
         if (gvObj.m_loop_bPaused === true) return
         setTimeout(function () {
-            if (start_time > 0) {
+            if (start_time >= 0) {
                 gvObj.play()
             }
         }, 3000)
     };
     gvObj.onemptied = (event) => {
-        $("#dbg").append('<br>Uh oh. The media is empty. Did you call load()?');
-        var maxlen = gvObj.duration;//(audio len in seconds)
-        $("#dbg").append(`onplay maxlen=${maxlen}`);
+        $("#dbg").append('<br>The media is empty. Did you call load()?');
+        var maxlen = gvObj.duration;// (audio len in seconds)
+        $("#dbg").append(`<br>onemptied maxlen=${maxlen}`);
     };
     gvObj.onpause = (event) => {
-        var maxlen = gvObj.duration;//(audio len in seconds)
+        var maxlen = gvObj.duration;// (audio len in seconds)
         $("#dbg").append(`<br>onpaused maxlen=${maxlen}`);
 
         var txt = "" + gvObj.currentTime
@@ -217,13 +217,13 @@ function create_audio_uictr(audinfo) {
     };
     gvObj.ontimeupdate = function () {
         if (-1 === stop_time) return
-        if (gvObj.currentTime >= stop_time) {
+        if (gvObj.currentTime > stop_time) {
             gvObj.pause()
 
             ////// loop after 3s. 
             if (gvObj.m_loop_bPaused === true) return
             setTimeout(function () {
-                if (start_time > 0) {
+                if (start_time >= 0) {
                     gvObj.play()
                 }
             }, 3000)
@@ -254,5 +254,5 @@ function store_offsets_data() {
 function update_offsets_data() {
     var x = parseInt($("#offset_star").val())
     var y = parseInt($("#offset_span").val())
-    gvObj.m_audinfo.offsetary([x,y])
+    gvObj.m_audinfo.offsetary([x, y])
 }

@@ -13,7 +13,7 @@
 
   <script src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleObj/NIV.json.js"></script>
   <script
-    src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleVerseAudioRelativePos/VrsAudioRelativePosLen_NIV.json.js"></script>
+    src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleVerseAudioRelativePos/VrsAudioRelativePosLen_NIV.json.js?v=2"></script>
   <script
     src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleVerseAudioRelativePos/Audio_Bible_Struct.js"></script>
 
@@ -207,11 +207,16 @@
         slst += `<option value='${key}'>`
       })
       $("#PulldownItems").html(slst)
+
+
+      $("#store_offsets").on("click",function(){
+        gvObj.m_audinfo.offsets_show()
+      })
     })
   </script>
   </input>
 
-  <button id="store_offs" title="store offsets">store_offsets</button>
+  <button id="store_offsets" title="store offsets">store_offsets</button>
 
 
   <table id="myAudioFileNameSelect" border='1'>
@@ -224,6 +229,7 @@
     <tbody></tbody>
   </table><br>
   <div id="dbg">dbg</div>
+  <textarea id="txa" size=1000></textarea>
 
 
 </body>
