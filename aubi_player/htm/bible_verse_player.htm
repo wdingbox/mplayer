@@ -105,11 +105,12 @@
       white-space: nowrap;
     }
 
-    #filename{
+    #filename {
       width: 99%;
       position: fixed;
-      top:0px;
+      top: 0px;
     }
+
     #txa {
       width: 99%;
     }
@@ -167,7 +168,7 @@
         var arr = $("#search_BkChp").val().split(":")
         $("#myAudioFileNameSelect").find(`td:contains('${arr[0]}')`)[0].scrollIntoView();
         $("#search_BkChp")[0].scrollIntoView();
-      
+
       })//////////
 
 
@@ -237,7 +238,7 @@
 
     </table>
 
-   
+
   </div>
 
 
@@ -262,25 +263,25 @@
     <option value="Safari">
   </datalist>
   <script>
-      $(function () {
-        var slst = ""
-        Object.keys(BkID_to_AudioName).forEach(function (key) {
-          slst += `<option value='${key}'>`
-        })
-        $("#PulldownItems").html(slst)
-
-
-        $("#store_offsets").on("click", function () {
-          localStorage_playOffsets.save_all()
-        })
-
-
-        $("#localClear").click(function () {
-          if (confirm("Are you sure to clear data?")) {
-            localStorage_playOffsets.clear_all()
-          }
-        })
+    $(function () {
+      var slst = ""
+      Object.keys(BkID_to_AudioName).forEach(function (key) {
+        slst += `<option value='${key}'>`
       })
+      $("#PulldownItems").html(slst)
+
+
+      $("#store_offsets").on("click", function () {
+        localStorage_playOffsets.save_all()
+      })
+
+
+      $("#localClear").click(function () {
+        if (confirm("Are you sure to clear data?")) {
+          localStorage_playOffsets.clear_all()
+        }
+      })
+    })
   </script>
   </input>
   <button id="Scroll2view" title="store offsets">Scroll2view</button>
