@@ -50,8 +50,11 @@
     }
 
 
-    table input {
+    input.metadat  {
       width: 80px;
+    }
+    input.adj  {
+      width: 50px;
     }
 
     .sright {
@@ -210,14 +213,14 @@
           <div class="sright">start</div>
         </td>
         <td>
-          <input id="start_float"
+          <input class="metadat" id="start_float"
             onclick="$('#show_stop_time').text(TimeFormatConverter.convert_seconds_to_hhmmss($(this).val()));"
             value="0.0" title="in seconds"></input>
         </td>
         <td>
           <button class="plusnum">+</button>
           <button class="minusnum">-</button>
-          <input id="offset_star" value="0" type="number"></input>
+          <input class="adj"  id="offset_star" value="0" type="number"></input>
         </td>
       </tr>
 
@@ -226,20 +229,28 @@
           <div class="sright">span</div>
         </td>
         <td>
-          <input id="durat_float" value="0"
+          <input  class="metadat"  id="durat_float" value="0"
             onclick="$('#show_stop_time').text(TimeFormatConverter.convert_seconds_to_hhmmss($(this).val()));"></input>
         </td>
         <td>
           <button class="plusnum">+</button>
           <button class="minusnum">-</button>
-          <input id="offset_span" value="0" type="number"></input>
+          <input class="adj" id="offset_span" value="0" type="number"></input>
         </td>
+        <td><a id="maxlen"></a></td>
       </tr>
 
     </table>
 
 
   </div>
+
+
+
+
+
+
+
 
 
 

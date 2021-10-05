@@ -78,6 +78,11 @@ $(function () {
     //setTimeout(function () {
     //}, 1000)
 
+    $("#maxlen").on("click",function(){
+        var maxlen = parseInt($(this).text())
+        $("#offset_span").val(maxlen)
+        update_offsets_data()
+    })
 
 });////////////////////////////////
 
@@ -234,6 +239,7 @@ function Reset_Audio_Ctrl(audinfo) {
     gvObj.oncanplaythrough = function () {
         var maxlen = gvObj.duration;//(audio len in seconds)
         $("#dbg").append(`<br>oncanplaythrough maxlen=${maxlen}`);
+        $("#maxlen").text(1+parseInt(maxlen))
     }
     gvObj.onplay = function () {
         var maxlen = gvObj.duration;//(audio len in seconds)
