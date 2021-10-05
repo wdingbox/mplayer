@@ -59,46 +59,67 @@
       text-align: right;
     }
 
-    #playedBoard{
+    #playedBoard {
       background-color: rgb(241, 245, 245);
     }
+
     .playedItem {
       border: solid grey;
       border-width: 1px;
     }
+
     .playedbcv {
       padding-left: 1px;
       padding-right: 1px;
 
       font-size: small;
       font-weight: bold;
-      color:blue;
+      color: blue;
     }
 
     .hiliscrollview {
       border-width: 5px;
       border-color: blue;
     }
+
     .hili {
       background-color: red;
     }
-    .hili_offsets{
-      background-color:yellowgreen;
-    }
-    .playingvrs, #DeletePlayingItem {
-      background-color:lightgreen;
-    }
-    
 
-    .loop_status{
-      border:solid blue;
+    .hili_offsets {
+      background-color: yellowgreen;
     }
-    #show_stop_time{
+
+    .playingvrs,
+    #DeletePlayingItem {
+      background-color: lightgreen;
+    }
+
+
+    .loop_status {
+      border: solid blue;
+    }
+
+    #show_stop_time {
       display: inline-block;
       white-space: nowrap;
     }
-    #filename, #txa{
+
+    #filename{
       width: 99%;
+      position: fixed;
+      top:0px;
+    }
+    #txa {
+      width: 99%;
+    }
+
+    #ctrpanel {
+      position: fixed;
+      background-color: lightgrey;
+      margin-top: 0px;
+      top: 20px;
+      right: 10px;
     }
   </style>
   <script language="javascript">
@@ -142,79 +163,87 @@
         }
       })
 
+      $("#Scroll2view").on("click", function () {
+        var arr = $("#search_BkChp").val().split(":")
+        $("#myAudioFileNameSelect").find(`td:contains('${arr[0]}')`)[0].scrollIntoView();
+        $("#search_BkChp")[0].scrollIntoView();
+      
+      })//////////
 
 
-    })////
-
-
-
+    })
 
   </script>
 
 <body>
+  <input id="filename" value="" size="100"></input>
+  <div id="ctrpanel">
+
+    <audio id="myAudio" controls autoplay="true" width="400" height="100">
+      <source src="" type="audio/ogg">
+      <source src="" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <hr />
 
 
 
-  <audio id="myAudio" controls autoplay="true" width="400" height="100">
-    <source src="" type="audio/ogg">
-    <source src="" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-  <hr />
 
 
 
+    <button id="speedup" onclick="speedup(0.25);">+</button>
+    <button id="speeddn" onclick="speedup(-0.25);">-</button>
+    <a>x </a><a id="speed">1.0</a>
+
+    <button id="start_loop">loop</button>
+    <button id="stop_loop">stop</button>
+    <a id="show_stop_time"></a>
+
+    <br>
 
 
 
-  <button id="speedup" onclick="speedup(0.25);">+</button>
-  <button id="speeddn" onclick="speedup(-0.25);">-</button>
-  <a>x </a><a id="speed">1.0</a>
-  
-  <button id="start_loop">loop</button>
-  <button id="stop_loop">stop</button>
-  <a id="show_stop_time"></a>
-  <br>
+    <table>
+      <tr>
+        <td>
+          <div class="sright">start</div>
+        </td>
+        <td>
+          <input id="start_float"
+            onclick="$('#show_stop_time').text(TimeFormatConverter.convert_seconds_to_hhmmss($(this).val()));"
+            value="0.0" title="in seconds"></input>
+        </td>
+        <td>
+          <button class="plusnum">+</button>
+          <button class="minusnum">-</button>
+          <input id="offset_star" value="0" type="number"></input>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="sright">span</div>
+        </td>
+        <td>
+          <input id="durat_float" value="0"
+            onclick="$('#show_stop_time').text(TimeFormatConverter.convert_seconds_to_hhmmss($(this).val()));"></input>
+        </td>
+        <td>
+          <button class="plusnum">+</button>
+          <button class="minusnum">-</button>
+          <input id="offset_span" value="0" type="number"></input>
+        </td>
+      </tr>
+
+    </table>
+
+   
+  </div>
 
 
 
-  <table>
-    <tr>
-      <td>
-        <div class="sright">start</div>
-      </td>
-      <td>
-        <input id="start_float" onclick="$('#show_stop_time').text(TimeFormatConverter.convert_seconds_to_hhmmss($(this).val()));"
-          value="0.0" title="in seconds"></input>
-      </td>
-      <td>
-        <button class="plusnum">+</button>
-        <button class="minusnum">-</button>
-        <input id="offset_star" value="0"  type="number"></input>
-      </td>
-    </tr>
-
-    <tr>
-      <td>
-        <div class="sright">span</div>
-      </td>
-      <td>
-        <input id="durat_float" value="0" onclick="$('#show_stop_time').text(TimeFormatConverter.convert_seconds_to_hhmmss($(this).val()));"
-        ></input>
-      </td>
-      <td>
-        <button class="plusnum">+</button>
-        <button class="minusnum">-</button>
-        <input id="offset_span" value="0" type="number"></input>
-      </td>
-    </tr>
-
-  </table>
-
-  <input id="filename" value="" size="100"></input><br>
-
-  <table border="1">
-    <tbody id="playedBoard" ></tbody>
+  <table border="1" style="margin-top: 200px;">
+    <tbody id="playedBoard"></tbody>
   </table>
 
 
@@ -223,7 +252,7 @@
 
   <button id="Bk_Chp_gen">GenBibleTable</button>
   <button id="DeletePlayingItem" onclick="RemovePlayingItemFromPlayedBoard()">Remove</button>
- 
+
   <input id="search_BkChp" placeholder="Psm121" list="PulldownItems">
   <datalist id="PulldownItems">
     <option value="Gen1">
@@ -233,32 +262,33 @@
     <option value="Safari">
   </datalist>
   <script>
-    $(function () {
-      var slst = ""
-      Object.keys(BkID_to_AudioName).forEach(function (key) {
-        slst += `<option value='${key}'>`
+      $(function () {
+        var slst = ""
+        Object.keys(BkID_to_AudioName).forEach(function (key) {
+          slst += `<option value='${key}'>`
+        })
+        $("#PulldownItems").html(slst)
+
+
+        $("#store_offsets").on("click", function () {
+          localStorage_playOffsets.save_all()
+        })
+
+
+        $("#localClear").click(function () {
+          if (confirm("Are you sure to clear data?")) {
+            localStorage_playOffsets.clear_all()
+          }
+        })
       })
-      $("#PulldownItems").html(slst)
-
-
-      $("#store_offsets").on("click",function(){
-        localStorage_playOffsets.save_all()
-      })
-
-
-      $("#localClear").click(function(){
-        if(confirm("Are you sure to clear data?")){
-          localStorage_playOffsets.clear_all()
-        }
-      })
-    })
   </script>
   </input>
-   <button id="store_offsets" title="store offsets">localSave</button>
-   <button id="localClear" title="clear all local saved data.">localClear</button>
-   <textarea id="txa"></textarea>
+  <button id="Scroll2view" title="store offsets">Scroll2view</button>
+  <button id="store_offsets" title="store offsets">localSave</button>
+  <button id="localClear" title="clear all local saved data.">localClear</button>
+  <textarea id="txa"></textarea>
 
- 
+
 
   <table id="myAudioFileNameSelect" border='1'>
     <option></option>
@@ -271,7 +301,7 @@
   </table><br>
   <div id="dbg">dbg</div>
   <br>
- 
+
 
 </body>
 

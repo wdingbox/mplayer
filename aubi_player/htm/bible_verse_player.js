@@ -188,21 +188,21 @@ function search_table_item_scroll2view(BkChp) {
     }
     if (BkChp.length === 3) BkChp += "1"
     $(".hiliscrollview").removeClass("hiliscrollview")
-    $("#myAudioFileNameSelect td").each(function () {
-        var itm = $(this).text().trim()
-        if (itm === BkChp) {
-            $("#myAudioFileNameSelect").find("td:contains('Rev22')")[0].scrollIntoView()
-            
-            $(this)[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' }) //relative scrollintoview.
-            
-            setTimeout(function(){
-                $("body")[0].scrollIntoView()
-            },1000)
-            
-            $(this).addClass("hiliscrollview")
-            return
-        }
-    })
+    //$("#myAudioFileNameSelect td").each(function () {
+    //    var itm = $(this).text().trim()
+    //    if (itm === BkChp) {
+    //        $("#myAudioFileNameSelect").find("td:contains('Rev22')")[0].scrollIntoView()
+    //        
+    //        $(this)[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' }) //relative scrollintoview.
+    //        
+    //        setTimeout(function(){
+    //            $("body")[0].scrollIntoView()
+    //        },1000)
+    //        
+    //        $(this).addClass("hiliscrollview")
+    //        return
+    //    }
+    //})
 }
 function onclk_playedItm() {
     var bcv = $(this).text()
