@@ -225,7 +225,7 @@ function Reset_Audio_Ctrl(audinfo) {
     if (!gvObj) {
         gvObj = document.getElementById('myAudio');
     }
-    $("#filename").val(audinfo.audsrc)
+    $("#txa").val(audinfo.audsrc)
     gvObj.m_audinfo = audinfo;
 
     gvObj.src = audinfo.audsrc
@@ -326,7 +326,7 @@ function loop_start() {
 
     $("#dbg").append("<br>loop_start: start_time=" + start_time)
 
-    gvObj.src = $("#filename").val()
+    gvObj.src = $("#txa").val()
     gvObj.muted = false;
     gvObj.currentTime = start_time
     gvObj.m_loop_bPaused = false
