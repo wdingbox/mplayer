@@ -34,8 +34,9 @@
       width: 100%;
     }
 
-    #myAudioFileNameSelect tbody {
-      height: 400px;
+    #myAudioFileNameSelect tbody 
+    {
+      height: 300px;
 
       overflow-y: scroll;
       display: block;
@@ -65,6 +66,11 @@
 
     #playedBoard {
       background-color: rgb(241, 245, 245);
+
+      height: 100px;
+
+      overflow-y: scroll;
+      display: block;
     }
 
     .playedItem {
@@ -270,14 +276,16 @@
 
 
 
-  <table border="1" style="margin-top: 200px;">
+  <table id="selecteditemhistory" border="1" style="margin-top: 200px;">
     <tbody id="playedBoard"></tbody>
   </table>
 
 
 
+  <button id="store_offsets" title="store offsets">localSave</button>
+  <button id="localClear" title="clear all local saved data.">localClear</button>
   <hr />
-
+  <br>
   <button id="Bk_Chp_gen">GenBibleTable</button>
   <button id="DeletePlayingItem" onclick="RemovePlayingItemFromPlayedBoard()">Remove</button>
 
@@ -312,8 +320,7 @@
   </script>
   </input>
   <button id="Scroll2view" title="store offsets">Scroll2view</button>
-  <button id="store_offsets" title="store offsets">localSave</button>
-  <button id="localClear" title="clear all local saved data.">localClear</button>
+  
   <textarea id="txa"></textarea>
 
 
