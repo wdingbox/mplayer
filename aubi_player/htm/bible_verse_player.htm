@@ -35,7 +35,7 @@
     }
 
     #myAudioFileNameSelect tbody {
-      height: 500px;
+      height: 400px;
 
       overflow-y: scroll;
       display: block;
@@ -188,6 +188,10 @@
 
     })
 
+    function speedup(dlt){
+      var cur = parseFloat($("#speed").text()) + dlt
+      $("#speed").text(cur)
+    }
   </script>
 
 <body>

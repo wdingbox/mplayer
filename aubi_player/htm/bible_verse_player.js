@@ -220,7 +220,7 @@ function onclk_playedItm() {
     $("#DeletePlayingItem").show("slide");
     $("#search_BkChp").val(bcv)
 
-    search_table_item_scroll2view(audinfo.BkChp)
+    //search_table_item_scroll2view(audinfo.BkChp)
     //$("body")[0].scrollIntoView(true)
     Reset_Audio_Ctrl(audinfo)
 
@@ -235,6 +235,8 @@ function Reset_Audio_Ctrl(audinfo) {
 
     gvObj.src = audinfo.audsrc
     gvObj.muted = true;
+    gvObj.playbackRate = parseFloat($("#speed").text())
+
     var stop_time = -1, start_time = -1
     gvObj.oncanplaythrough = function () {
         var maxlen = gvObj.duration;//(audio len in seconds)
@@ -307,6 +309,7 @@ function Reset_Audio_Ctrl(audinfo) {
         $("#show_stop_time").text(gvObj.m_audinfo.bcv + " @ " + txt)
     };
     gvObj.ontimeupdate = function () {
+        gvObj.playbackRate = parseFloat($("#speed").text())
         if (-1 === stop_time) return
         if (gvObj.currentTime > stop_time) {
             gvObj.pause()
