@@ -1,0 +1,54 @@
+body {
+        height: 100%;
+        width: 595px;
+        /* to centre page on screen*/
+        margin-left: auto;
+        margin-right: auto;
+    }	
+	
+a{
+   text-decoration:none;
+}
+
+a[href$='.htm']{
+   color: blue;
+}
+a[href^='#']{
+   color: red;
+}
+
+zh{
+  font-size:50px;
+  font-weight: bold;
+}
+
+zh1{
+  font-size:40px;
+  font-weight: bold;
+}
+
+zh2{
+  font-size:30px;
+  font-weight: bold;
+}
+
+zh3{
+  font-size:20px;
+  font-weight: bold;
+}
+
+
+
+#toc > li  > a {
+font-size:25px;
+}
+
+
+
+
+
+
+
+div.backupdocs{
+  display:none;
+}
