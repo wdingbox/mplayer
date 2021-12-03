@@ -176,7 +176,7 @@
       $("#search_BkChp").on("keyup", function (evt) {
         var val = $(this).val()
         if (13 === evt.keyCode) {
-          search_table_item_scroll2view(val)
+          $("#Scroll2view").trigger("click")
         }
       })
 
@@ -187,7 +187,7 @@
         if (val.length > 3 && val.indexOf(":") < 0) val += ":1"
         var items = $(`a.vrsItm[title='${val}']`)
         if (!items || items.length === 0) return alert("cannot find " + val)
-        items[0].scrollIntoView(false); //bottom
+        items[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' }); //bottom
         items.addClass("hili")
       })//////////
 
@@ -285,7 +285,6 @@
   <button id="store_offsets" title="store offsets">localSave</button>
   <button id="localClear" title="clear all local saved data.">localClear</button>
   <hr />
-  <br>
   <button id="Bk_Chp_gen">GenBibleTable</button>
   <button id="DeletePlayingItem" onclick="RemovePlayingItemFromPlayedBoard()">Remove</button>
 
@@ -326,14 +325,14 @@
 
 
   <table id="myAudioFileNameSelect" border='1'>
-    <option></option>
     <thead>
       <th>Bk_Chp</th>
       <th>Verses</th>
-
     </thead>
     <tbody></tbody>
-  </table><br>
+  </table>
+  
+  <br>
   <div id="dbg">dbg</div>
   <br>
 

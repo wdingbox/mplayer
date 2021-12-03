@@ -150,7 +150,7 @@ function appendToPlayBoard(bcv) {
     }
 
     $("#playedBoard").find(".playingvrs").removeClass("playingvrs")
-    $("#playedBoard").find(`.playedbcv[bcv='${bcv}']`).addClass("playingvrs")
+    $("#playedBoard").find(`.playedbcv[bcv='${bcv}']`).addClass("playingvrs")[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
 }
 function play_url_param_bcv(bcv) {
     var audinfo = new Audio_Info(bcv)
