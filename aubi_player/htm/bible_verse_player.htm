@@ -181,7 +181,7 @@
         if (val.length > 3 && val.indexOf(":") < 0) val += ":1"
         var items = $(`a.vrsItm[title='${val}']`)
         if (!items || items.length === 0) return alert("cannot find " + val)
-        items[0].scrollIntoView();
+        items[0].scrollIntoView(false); //bottom
         items.addClass("hili")
       })//////////
 
@@ -204,14 +204,15 @@
 
 
 
-
+    <button id="stop_loop">stop</button>
+    <button id="start_loop">loop</button>
 
     <button id="speedup" onclick="speedup(0.25);">+</button>
     <button id="speeddn" onclick="speedup(-0.25);">-</button>
     <a>x </a><a id="speed">1.0</a>
 
-    <button id="start_loop">loop</button>
-    <button id="stop_loop">stop</button><br>
+    
+    <br>
     <a id="show_stop_time"></a>
 
     <br>
