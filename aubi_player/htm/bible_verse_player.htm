@@ -34,8 +34,7 @@
       width: 100%;
     }
 
-    #myAudioFileNameSelect tbody 
-    {
+    #myAudioFileNameSelect tbody {
       height: 300px;
 
       overflow-y: scroll;
@@ -96,13 +95,13 @@
       background-color: red;
     }
 
-    .hili_offsets {
-      
-    }
-    .startime{
+    .hili_offsets {}
+
+    .startime {
       background-color: yellowgreen;
     }
-    .spantime{
+
+    .spantime {
       background-color: lightcoral;
     }
 
@@ -194,10 +193,12 @@
 
     })
 
-    function speedup(dlt){
+    function speedup(dlt) {
       var cur = parseFloat($("#speed").text()) + dlt
       $("#speed").text(cur)
     }
+
+
   </script>
 
 <body>
@@ -221,7 +222,7 @@
     <button id="speeddn" onclick="speedup(-0.25);">-</button>
     <a>x </a><a id="speed">1.0</a>
 
-    
+
     <br>
     <a id="show_stop_time"></a>
 
@@ -240,8 +241,8 @@
             value="0.0" title="in seconds"></input>
         </td>
         <td>
-          <button class="plusnum">+</button>
-          <button class="minusnum">-</button>
+          <button onclick="delta_offset(1,0);">+</button>
+          <button onclick="delta_offset(-1,0)">-</button>
           <input class="adj" id="offset_star" value="0" type="number"></input>
         </td>
       </tr>
@@ -255,8 +256,8 @@
             onclick="$('#show_stop_time').text(TimeFormatConverter.convert_seconds_to_hhmmss($(this).val()));"></input>
         </td>
         <td>
-          <button class="plusnum">+</button>
-          <button class="minusnum">-</button>
+          <button onclick="delta_offset(0,1);">+</button>
+          <button onclick="delta_offset(0,-1)">-</button>
           <input class="adj" id="offset_span" value="0" type="number"></input>
         </td>
         <td><a id="maxlen"></a></td>
@@ -319,7 +320,7 @@
   </script>
   </input>
   <button id="Scroll2view" title="store offsets">Scroll2view</button>
-  
+
   <textarea id="txa"></textarea>
 
 
@@ -331,7 +332,7 @@
     </thead>
     <tbody></tbody>
   </table>
-  
+
   <br>
   <div id="dbg">dbg</div>
   <br>

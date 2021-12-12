@@ -61,7 +61,7 @@ $(function () {
     localStorage_playOffsets.load_playedList()
     //console.log(NIV)
     $("#Bk_Chp_gen").on("click", function () {
-        
+
         gen_bible_table()
     })
 
@@ -78,7 +78,7 @@ $(function () {
     //setTimeout(function () {
     //}, 1000)
 
-    $("#maxlen").on("click",function(){
+    $("#maxlen").on("click", function () {
         var maxlen = parseInt($(this).text())
         $("#offset_span").val(maxlen)
         update_offsets_data()
@@ -241,7 +241,7 @@ function Reset_Audio_Ctrl(audinfo) {
     gvObj.oncanplaythrough = function () {
         var maxlen = gvObj.duration;//(audio len in seconds)
         $("#dbg").append(`<br>oncanplaythrough maxlen=${maxlen}`);
-        $("#maxlen").text(1+parseInt(maxlen))
+        $("#maxlen").text(1 + parseInt(maxlen))
     }
     gvObj.onplay = function () {
         var maxlen = gvObj.duration;//(audio len in seconds)
@@ -324,7 +324,11 @@ function Reset_Audio_Ctrl(audinfo) {
         }
     }
 }
-function loop_start() {
+
+
+
+
+function get_ui_start_time() {
     var offsetime = parseFloat($("#offset_star").val())
     var startTime = $("#start_float").val()
     if ("0.0" === startTime) {
@@ -334,11 +338,42 @@ function loop_start() {
     var start_time = offsetime + parseFloat(startTime)
 
     $("#dbg").append("<br>loop_start: start_time=" + start_time)
+    return parseFloat(startTime)
+}
+function get_ui_span_time() {
+    var offsetime = parseFloat($("#offset_span").val())
+    var durat_float = $("#durat_float").val()
+    if ("0.0" === durat_float) {
+        alert("not init yet.")
+    }
 
+    durat_float = offsetime + parseFloat(durat_float)
+
+    $("#dbg").append("<br>loop_start: start_time=" + durat_float)
+    return parseFloat(durat_float)
+}
+function delta_offset(ioffstart, ioffspan) {
+    var x = parseInt($("#offset_star").val()) + ioffstart
+    var y = parseInt($("#offset_span").val()) + ioffspan
+    $("#offset_star").val(x)
+    $("#offset_span").val(y)
+    var retary = gvObj.m_audinfo.offsetary([x, y])
+    var star = get_ui_start_time()
+    if (0 === ioffstart) {
+        star += get_ui_span_time()
+        gvObj.currentTime = (star - 5)
+    }
+    if (0 === ioffspan) {
+        loop_start(star - 3)
+    }
+}
+
+function loop_start(startime) {
     gvObj.src = $("#txa").val()
     gvObj.muted = false;
-    gvObj.currentTime = start_time
+    gvObj.currentTime = (null === startime) ? get_ui_start_time() : startime
     gvObj.m_loop_bPaused = false
+    //gvObj.play()
 }
 function loop_stop() {
     gvObj.pause()
